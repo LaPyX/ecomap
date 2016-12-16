@@ -1,28 +1,246 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Open Sans');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 // Variables
 @import "variables";
+@import "loader";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
 html, body {
   min-height: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Clear Sans", sans-serif;
+  font-size: 18px;
+}
+
+.btn {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  font-size: 18px;
+
+  &-white {
+    border: 1px solid #fff;
+    padding: .5em 2em;
+    color: #fff;
+    opacity: .9;
+    transition: .15s opacity;
+
+    &:hover, &:active, &:focus {
+      opacity: 1;
+      color: #fff;
+    }
+  }
+}
+
+.form {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 550px;
+  background-color: #fff;
+  padding: 2em;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .1);
+  overflow-y: scroll;
+
+  &-control {
+    font-size: 18px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid $laravel-border-color;
+    padding: 1.5em 2em 1.5em 0;
+    box-shadow: none !important;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  &__header {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+  i {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    top: .2em;
+    margin-right: .5em;
+    color: inherit;
+  }
+
+  label {
+    font-weight: normal;
+  }
+
+  input[type=file] {
+    padding: .5em 0;
+  }
 }
 
 .header {
-  background: #449d44;
+  position: relative;
+  z-index: 2;
+  background: $brand-primary;
+  color: #fff;
+  padding: 1em 0;
 }
 
 .body {
-  display: flex;
-  align-items: stretch;
-  height: 100%;
+  position: absolute;
+  top: 6em;
+  right: 0;
+  bottom: 2em;
+  left: 0;
+  display: block;
+  overflow: hidden;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .footer {
+  @extend .header;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
 
+
+.slide-fade-enter-active {
+  transition: all .6s ease;
+}
+.slide-fade-leave-active {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.slide-fade-enter {
+  margin-left: -10px;
+  opacity: 0;
+}
+
+.slide-fade-leave-active {
+  margin-left: 10px;
+  opacity: 0;
+}
+
+
+.slide-left-enter-active {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.slide-left-leave-active {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.slide-left-enter, .slide-down-leave-active {
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+
+.slide-down-enter-active {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.slide-down-leave-active {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.slide-down-enter {
+  transform: translateY(-25px);
+  opacity: 0;
+}
+
+.slide-down-leave-active {
+  transform: translateY(25px);
+  opacity: 0;
+}
+
+
+.form-control {
+  box-shadow: none;
+
+  &__container {
+    position: relative;
+    background-color: #fff;
+    z-index: 1;
+  }
+
+  &__error {
+    display: block;
+    height: 1rem;
+
+    small {
+      display: inline-block;
+      position: relative;
+      top: 0;
+      font-size: .8em;
+    }
+  }
+}
+
+.form-group {
+}
+
+.has-success {
+  .form-control--ghost, i {
+    color: $state-success-text;
+  }
+}
+
+.has-error {
+  .form-control--ghost, i {
+    color: $state-danger-text;
+  }
+}
+
+.btn {
+  transition: .25s background-color $ease-out-expo;
+  border-radius: 0;
+  padding: .3em 1.5em;
+
+  &.btn-lg {
+    padding: .5em 1.5em;
+  }
+}
+
+.btn-ghost {
+  background-color: transparent;
+
+  &.btn-primary {
+    color: $brand-primary;
+    border-color: $brand-primary;
+
+    &:hover {
+      background-color: $brand-primary;
+      color: #fff;
+    }
+  }
+}
+
+.thank-you {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, .9);
+  z-index: 100;
+  padding: 2em;
+  text-align: center;
 }

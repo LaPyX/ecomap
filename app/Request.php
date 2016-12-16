@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Request extends Model
 {
-    //
+    public $fillable = [
+        'subject',
+        'address',
+        'description',
+        'map_point',
+        'address',
+        'name',
+        'phone',
+    ];
 }

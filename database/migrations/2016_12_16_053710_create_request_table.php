@@ -13,7 +13,17 @@ class CreateRequestTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('requests', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('subject')->nullable();
+            $table->string('address')->nullable();
+            $table->text('description')->nullable();
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->text('map_point')->nullable();
+            $table->string('photo')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +33,6 @@ class CreateRequestTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('requests');
     }
 }

@@ -11,8 +11,11 @@
 |
 */
 
-Route::get('/', 'AppController@index');
+use Illuminate\Support\Facades\Auth;
 
-//Auth::routes();
+Route::get('/', 'AppController@index');
+Route::resource('requests', 'ResourceController');
+
+Auth::routes();
 
 //Route::get('/home', 'HomeController@index');
