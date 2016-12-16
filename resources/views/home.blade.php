@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta id="token" name="token" value="{{csrf_token()}}">
 
-        <title>Laravel</title>
+        <title>Экологическая карта</title>
 
         <link href="https://fonts.googleapis.com/css?family=Open Sans:100,600" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="/css/app.css">
