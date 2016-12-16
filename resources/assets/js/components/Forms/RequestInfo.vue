@@ -10,8 +10,8 @@
             <b>Адрес:</b><br>{{ $parent.requests[item].address }}
         </p>
 
-        <p v-if="getImage">
-            <img :src="getImage" style="max-width: 100%;">
+        <p v-if="getImage" style="margin-top: 3em; display: block;">
+            <img :src="getImage()" style="max-width: 100%;">
         </p>
 
         <a href="#" class="btn btn-primary" v-on:click.prevent="hideForm" style="margin-top: 3em;">Закрыть</a>
@@ -25,7 +25,7 @@
         },
         methods: {
             getImage() {
-                return this.$parent.requests[item].photo ? '/images/requests/' + this.$parent.requests[item].photo : false;
+                return this.$parent.requests[this.item].photo ? this.$parent.requests[this.item].photo : false;
             },
             hideForm() {
                 this.$emit('close-form');

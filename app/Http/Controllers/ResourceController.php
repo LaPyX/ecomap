@@ -67,15 +67,16 @@ class ResourceController extends Controller
             $requestObject = \App\Request::create($attributes);
 
             if ($request->file('photo')) {
-                $path = '/public/images/requests/';
+                $path = '/images/requests/';
 
                 if ('' !== $requestObject->photo) {
                     Storage::delete(base_path() . $path . $requestObject->image);
                 }
 
                 $imageName = $requestObject->id . '.' . $request->file('photo')->getClientOriginalExtension();
-                $request->image->move(base_path() . $path, $imageName);
-                $requestObject->image = $path . $imageName;
+                $request->photo->move(base_path() . '/public' . $path, $imageName);
+                $requestObject->photo = $path . $imageName;
+                $requestObject->save();
             }
             
             return response()->json([

@@ -49,12 +49,12 @@
 <script>
     export default {
         props: {
-            placemark: {},
-            file: null
+            placemark: {}
         },
         data() {
             return {
                 loading: false,
+                file: null,
                 fields: {
                     subject: {
                         value: '',
@@ -108,20 +108,11 @@
             submit: function() {
                 this.clearErrors();
 
-                var options = {
-                    subject: this.fields.subject.value,
-                    description: this.fields.description.value,
-                    address: this.fields.address.value,
-                    photo: this.file,
-                    name: this.fields.name.value,
-                    phone: this.fields.phone.value,
-                };
-
                 var formData = new FormData();
                 formData.append('subject', this.fields.subject.value);
                 formData.append('description', this.fields.description.value);
                 formData.append('address', this.fields.address.value);
-                formData.append('photo', this.fields.photo.value);
+                formData.append('photo', this.file);
                 formData.append('name', this.fields.name.value);
                 formData.append('phone', this.fields.phone.value);
 
@@ -132,7 +123,9 @@
                 this.$http.post('/requests', formData).then((response) => {
                     var response = response.body;
 
-                    this.$emit('success');
+                    if (response.status == 'ok') {
+                        this.$emit('success');
+                    }
                 }, (response) => {
                     for (var field in this.fields) {
                         if (field in response.body.errors) {
