@@ -116,21 +116,23 @@
                     }
                 });
 
-                var i = 0;
-                for (var request in parent.requests) {
-                    var point = new ymaps.Placemark(parent.requests[request].map_point);
-                    console.log(parent.requests[request].map_point);
-                    point.__id = i++;//parent.requests[request].id;
+                setTimeout(function() {
+                    var i = 0;
+                    for (var request in parent.requests) {
+                        var point = new ymaps.Placemark(parent.requests[request].map_point);
+                        console.log(parent.requests[request].map_point);
+                        point.__id = i++;//parent.requests[request].id;
 
-                    point.events.add('click', function (event) {
-                        point = event.get('target');
-                        parent.state = 'info';
-                        parent.item = point.__id;
-                        parent.busy = true;
-                    });
+                        point.events.add('click', function (event) {
+                            point = event.get('target');
+                            parent.state = 'info';
+                            parent.item = point.__id;
+                            parent.busy = true;
+                        });
 
-                    myMap.geoObjects.add(point);
-                }
+                        myMap.geoObjects.add(point);
+                    }
+                }, 1000);
             }
         }
     }
