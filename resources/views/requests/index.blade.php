@@ -14,11 +14,10 @@
     @foreach($requests as $request)
         <tr>
             <td>
-                @if ($request->status)
-                    <a href="/requests/{{ $request->id }}/edit">Скрыть</a>
-                @else
-                    <a href="/requests/{{ $request->id }}/edit">Подтвердить</a>
-                @endif
+                <a href="/requests/{{ $request->id }}/edit/?status=0" @if(0 == $request->status) style="font-weight: bold; font-size: 1.2em;" @endif>Скрыто</a><br>
+                <a href="/requests/{{ $request->id }}/edit/?status=1" @if(1 == $request->status) style="font-weight: bold; font-size: 1.2em;" @endif>На рассмотрении</a><br>
+                <a href="/requests/{{ $request->id }}/edit/?status=2" @if(2 == $request->status) style="font-weight: bold; font-size: 1.2em;" @endif>Осведомлены</a><br>
+                <a href="/requests/{{ $request->id }}/edit/?status=3" @if(3 == $request->status) style="font-weight: bold; font-size: 1.2em;" @endif>В работе</a>
             </td>
             <td>{{ $request->id }}</td>
             <td>{{ $request->subject }}</td>
@@ -27,7 +26,9 @@
 
             <td>{{ $request->name }}</td>
             <td>{{ $request->phone }}</td>
-            <td>{{ $request->photo }}</td>
+            <td>
+                <a href="{{ $request->photo }}" target="_blank"><img src="{{ $request->photo }}" style="width: 100px";></a>
+            </td>
         </tr>
     @endforeach
 </table>

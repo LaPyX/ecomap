@@ -17,10 +17,8 @@
 
         <div class="form-control__error" v-if="!hideHelpers">
             <transition name="slide-down">
-                <small class="form-text text-muted" v-if="hint">
-                    {{ hint }}
-                </small>
                 <small class="form-text text-danger" v-if="error">{{ error }}</small>
+                <small class="form-text text-muted" v-if="hint">{{ hint }}</small>
             </transition>
         </div>
     </div>

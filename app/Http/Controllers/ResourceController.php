@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
@@ -16,13 +17,13 @@ class ResourceController extends Controller
     public function index()
     {
         return view('requests.index', [
-            'requests' => \App\Request::all()
+            'requests' => \App\Request::orderBy('created_at', 'desc')->get()
         ]);
     }
 
     public function ajax()
     {
-        $requests = \App\Request::where('status', 1)->get();
+        $requests = \App\Request::where('status', '>=', 1)->get();
         foreach ($requests as $key => $request) {
             $requests[$key]['map_point'] = unserialize($requests[$key]['map_point']);
         }
@@ -50,6 +51,8 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
+        App::setLocale('ru');
+
         try {
             $this->validate($request, [
                 'subject'     => 'required|min:3|max:255',
@@ -107,10 +110,10 @@ class ResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $requestObject = \App\Request::where('id', $id)->first();
-        $requestObject->status = 1 - $requestObject->status;
+        $requestObject->status = $request->status;
         $requestObject->save();
 
         return redirect('/requests');

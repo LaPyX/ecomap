@@ -1,8 +1,21 @@
 <template>
     <div>
+        <p class="small text-danger" v-if="isStatusPending()">
+            На рассмотрении
+        </p>
+
+        <p class="small text-info" v-if="isStatusDelivered()">
+            Соответствующие органы осведомлены
+        </p>
+
+        <p class="small text-success" v-if="isStatusInProgress()">
+            В работе
+        </p>
+
         <p>
             <b>Тема:</b><br>{{ $parent.requests[item].subject }}
         </p>
+
         <p>
             <b>Описание:</b><br>{{ $parent.requests[item].description }}
         </p>
@@ -24,6 +37,15 @@
             item: {}
         },
         methods: {
+            isStatusPending() {
+                return 1 == parseInt(this.$parent.requests[this.item].status);
+            },
+            isStatusDelivered() {
+                return 2 == parseInt(this.$parent.requests[this.item].status);
+            },
+            isStatusInProgress() {
+                return 3 == parseInt(this.$parent.requests[this.item].status);
+            },
             getImage() {
                 return this.$parent.requests[this.item].photo ? this.$parent.requests[this.item].photo : false;
             },

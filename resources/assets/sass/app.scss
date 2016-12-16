@@ -12,8 +12,24 @@
 
 html, body {
   min-height: 100%;
-  font-family: "Clear Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
+}
+
+.text-info {
+  color: $brand-info;
+}
+
+.text-danger {
+  color: $brand-danger;
+}
+
+.text-success {
+  color: $brand-success;
+}
+
+.has-error .form-control {
+  border-color: $brand-danger;
 }
 
 .btn {
@@ -68,6 +84,10 @@ html, body {
     margin-bottom: 1em;
   }
 
+  &__fields {
+    margin-bottom: 2em;
+  }
+
   i {
     position: relative;
     width: 1em;
@@ -92,6 +112,10 @@ html, body {
   background: $brand-primary;
   color: #fff;
   padding: 1em 0;
+
+  .btn {
+    padding: .75em 1.5em;
+  }
 }
 
 .body {
@@ -115,10 +139,15 @@ html, body {
 
 .footer {
   @extend .header;
+  background-color: #fff;
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
+
+  img {
+    width: 56px;
+  }
 }
 
 

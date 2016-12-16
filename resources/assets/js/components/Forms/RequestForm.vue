@@ -11,7 +11,7 @@
                         :error="fields.address.error"
                         :valid="fields.address.valid"></text-block>
 
-            <transition name="slide-down">
+            <transition name="slide-down" mode="out-in">
                 <div v-if="!placemark" class="text-info" style="margin-bottom: 1em;"><i class="material-icons">info outline</i> Укажите место на карте</div>
                 <div v-if="placemark" class="text-success" style="margin-bottom: 1em;"><i class="material-icons">done</i> Место указано</div>
             </transition>

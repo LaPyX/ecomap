@@ -3,7 +3,8 @@
         <div id="map"></div>
         <div class="header">
             <div class="container">
-                Logo
+                <img src="/images/logo.png" title="Экологическая карта">
+
                 <a href="#" class="btn btn-white pull-right" v-on:click="showRequestForm">Сообщить о нарушении</a>
             </div>
         </div>
@@ -29,6 +30,12 @@
                 </div>
             </transition>
         </div>
+
+        <div class="footer">
+            <div class="container">
+                <img src="/images/logo_onf.png" title="Общероссийский народный фронт">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -42,12 +49,14 @@
                 success: false,
                 requests: [],
                 item: null,
-                busy: false,
+                busy: true,
+                ymap: null
             }
         },
         methods: {
             showRequest() {},
             showRequestForm() {
+                this.busy = false;
                 this.state = 'form';
             },
             isFormShown() {
@@ -79,48 +88,48 @@
             closeForm() {
                 this.state = null;
                 this.item = null;
-                this.busy = false;
+                this.busy = true;
+
+
+                this.ymap.geoObjects.remove(this.placemark);
+                this.placemark = null;
             }
         },
         mounted() {
             ymaps.ready(init);
-            var myMap;
 
             this.getRequests();
 
             const parent = this;
 
             function init(){
-                myMap = new ymaps.Map ("map", {
+                parent.ymap = new ymaps.Map ("map", {
                     center: [55.76, 37.64],
                     zoom: 7
                 });
 
-                myMap.controls.add(
+                parent.ymap.controls.add(
                     new ymaps.control.ZoomControl()
                 );
-                myMap.behaviors.enable('scrollZoom');
+                parent.ymap.behaviors.enable('scrollZoom');
 
-                myMap.events.add('click', function (e) {
+                parent.ymap.events.add('click', function (e) {
                     if (parent.busy) {
                         return false;
                     }
 
-                    if (null === parent.placemark) {
-                        parent.placemark = new ymaps.Placemark(e.get('coordPosition'));
-                        myMap.geoObjects.add(parent.placemark);
-                    } else {
-                        myMap.geoObjects.remove(parent.placemark);
-                        parent.placemark = new ymaps.Placemark(e.get('coordPosition'));
-                        myMap.geoObjects.add(parent.placemark);
+                    if (null !== parent.placemark) {
+                        parent.ymap.geoObjects.remove(parent.placemark);
                     }
+
+                    parent.placemark = new ymaps.Placemark(e.get('coordPosition'), {}, { iconColor: 'red' });
+                    parent.ymap.geoObjects.add(parent.placemark);
                 });
 
                 setTimeout(function() {
                     var i = 0;
                     for (var request in parent.requests) {
                         var point = new ymaps.Placemark(parent.requests[request].map_point);
-                        console.log(parent.requests[request].map_point);
                         point.__id = i++;//parent.requests[request].id;
 
                         point.events.add('click', function (event) {
@@ -130,7 +139,7 @@
                             parent.busy = true;
                         });
 
-                        myMap.geoObjects.add(point);
+                        parent.ymap.geoObjects.add(point);
                     }
                 }, 1000);
             }
