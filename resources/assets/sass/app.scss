@@ -1,0 +1,28 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Open Sans');
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+html, body {
+  min-height: 100%;
+  font-family: "Open Sans", sans-serif;
+}
+
+.header {
+  background: #449d44;
+}
+
+.body {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.footer {
+
+}
