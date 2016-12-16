@@ -21,7 +21,11 @@
                         </div>
                     </transition>
 
-                    <request-form v-on:success="successSent" :placemark="placemark"></request-form>
+                    <request-form v-on:success="successSent" :placemark="placemark" v-on:close-form="closeForm"></request-form>
+                </div>
+
+                <div class="form" v-if="isInfoShown()">
+                    <request-info :item="item" v-on:close-form="closeForm"></request-info>
                 </div>
             </transition>
         </div>
@@ -35,7 +39,10 @@
                 loading: false,
                 state: null,
                 placemark: null,
-                success: false
+                success: false,
+                requests: [],
+                item: null,
+                busy: false,
             }
         },
         methods: {
@@ -45,6 +52,9 @@
             },
             isFormShown() {
                 return 'form' == this.state;
+            },
+            isInfoShown() {
+                return 'info' == this.state;
             },
             successSent() {
                 this.success = true;
@@ -57,11 +67,26 @@
                         parent.placemark = null;
                     }, 500);
                 }, 4000);
+            },
+            getRequests() {
+                this.$http.get('/requests/ajax').then((response) => {
+                    var requests = response.body.requests;
+
+                    this.requests = requests;
+                }, (response) => {
+                });
+            },
+            closeForm() {
+                this.state = null;
+                this.item = null;
+                this.busy = false;
             }
         },
         mounted() {
             ymaps.ready(init);
             var myMap;
+
+            this.getRequests();
 
             const parent = this;
 
@@ -77,6 +102,10 @@
                 myMap.behaviors.enable('scrollZoom');
 
                 myMap.events.add('click', function (e) {
+                    if (parent.busy) {
+                        return false;
+                    }
+
                     if (null === parent.placemark) {
                         parent.placemark = new ymaps.Placemark(e.get('coordPosition'));
                         myMap.geoObjects.add(parent.placemark);
@@ -86,6 +115,22 @@
                         myMap.geoObjects.add(parent.placemark);
                     }
                 });
+
+                var i = 0;
+                for (var request in parent.requests) {
+                    var point = new ymaps.Placemark(parent.requests[request].map_point);
+                    console.log(parent.requests[request].map_point);
+                    point.__id = i++;//parent.requests[request].id;
+
+                    point.events.add('click', function (event) {
+                        point = event.get('target');
+                        parent.state = 'info';
+                        parent.item = point.__id;
+                        parent.busy = true;
+                    });
+
+                    myMap.geoObjects.add(point);
+                }
             }
         }
     }

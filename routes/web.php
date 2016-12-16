@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', 'AppController@index');
+Route::get('/requests/ajax', 'ResourceController@ajax');
 Route::resource('requests', 'ResourceController');
 
 Auth::routes();

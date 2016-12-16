@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class ResourceController extends Controller
@@ -16,6 +17,18 @@ class ResourceController extends Controller
     {
         return view('requests.index', [
             'requests' => \App\Request::all()
+        ]);
+    }
+
+    public function ajax()
+    {
+        $requests = \App\Request::where('status', 1)->get();
+        foreach ($requests as $key => $request) {
+            $requests[$key]['map_point'] = unserialize($requests[$key]['map_point']);
+        }
+
+        return response()->json([
+            'requests' => $requests
         ]);
     }
 
@@ -48,7 +61,22 @@ class ResourceController extends Controller
                 'phone'     => 'required|min:3|max:255',
             ]);
 
-            \App\Request::create($request->all());
+            $attributes = $request->all();
+            $attributes['map_point'] = serialize(explode(',', $attributes['map_point']));
+            $attributes['status'] = 0;
+            $requestObject = \App\Request::create($attributes);
+
+            if ($request->file('photo')) {
+                $path = '/public/images/requests/';
+
+                if ('' !== $requestObject->photo) {
+                    Storage::delete(base_path() . $path . $requestObject->image);
+                }
+
+                $imageName = $requestObject->id . '.' . $request->file('photo')->getClientOriginalExtension();
+                $request->image->move(base_path() . $path, $imageName);
+                $requestObject->image = $path . $imageName;
+            }
             
             return response()->json([
                 'status' => 'ok'
@@ -80,7 +108,11 @@ class ResourceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $requestObject = \App\Request::where('id', $id)->first();
+        $requestObject->status = 1 - $requestObject->status;
+        $requestObject->save();
+
+        return redirect('/requests');
     }
 
     /**
@@ -92,7 +124,7 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**

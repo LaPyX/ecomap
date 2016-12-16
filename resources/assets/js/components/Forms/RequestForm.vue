@@ -25,7 +25,8 @@
             <file-block label="Фото" hint="Один файл, не более 5 Мб"
                         v-model="fields.photo.value"
                         :error="fields.photo.error"
-                        :valid="fields.photo.valid"></file-block>
+                        :valid="fields.photo.valid"
+                        @change-file="fileChange"></file-block>
 
             <div class="form__header">Контактная информация</div>
             <text-block placeholder="Ваше ФИО" hint="Видны только администрации сайта"
@@ -48,7 +49,8 @@
 <script>
     export default {
         props: {
-            placemark: {}
+            placemark: {},
+            file: null
         },
         data() {
             return {
@@ -94,19 +96,40 @@
         },
         methods: {
             hideForm() {
-                this.$parent.state = null;
+                this.$emit('close-form');
+            },
+            fileChange(value) {
+                var files = value.target.files || value.dataTransfer.files;
+                if (!files.length) {
+                    return;
+                }
+                this.file = files[0];
             },
             submit: function() {
                 this.clearErrors();
 
-                this.$http.post('/requests', {
+                var options = {
                     subject: this.fields.subject.value,
                     description: this.fields.description.value,
                     address: this.fields.address.value,
-                    photo: this.fields.photo.value,
+                    photo: this.file,
                     name: this.fields.name.value,
                     phone: this.fields.phone.value,
-                }).then((response) => {
+                };
+
+                var formData = new FormData();
+                formData.append('subject', this.fields.subject.value);
+                formData.append('description', this.fields.description.value);
+                formData.append('address', this.fields.address.value);
+                formData.append('photo', this.fields.photo.value);
+                formData.append('name', this.fields.name.value);
+                formData.append('phone', this.fields.phone.value);
+
+                if (null !== this.placemark) {
+                    formData.append('map_point', this.placemark.geometry.getCoordinates());
+                }
+
+                this.$http.post('/requests', formData).then((response) => {
                     var response = response.body;
 
                     this.$emit('success');

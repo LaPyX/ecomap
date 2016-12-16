@@ -33,6 +33,7 @@ Vue.component('file-block', require('./components/controls/File.vue'));
 Vue.component('button-block', require('./components/controls/Button.vue'));
 
 Vue.component('request-form', require('./components/Forms/RequestForm.vue'));
+Vue.component('request-info', require('./components/Forms/RequestInfo.vue'));
 
 Vue.component('loader', require('./components/Loader.vue'));
 Vue.component('app', require('./components/App.vue'));

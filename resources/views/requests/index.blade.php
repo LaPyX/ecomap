@@ -14,7 +14,11 @@
     @foreach($requests as $request)
         <tr>
             <td>
-                <a href="#">Подтвердить</a>
+                @if ($request->status)
+                    <a href="/requests/{{ $request->id }}/edit">Скрыть</a>
+                @else
+                    <a href="/requests/{{ $request->id }}/edit">Подтвердить</a>
+                @endif
             </td>
             <td>{{ $request->id }}</td>
             <td>{{ $request->subject }}</td>

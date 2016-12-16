@@ -11,6 +11,7 @@
             :error="error"
             v-on:input-trigger="inputTrigger"
             v-on:send-event="send"
+            v-on:change-file="change"
             :hideHelpers="hideHelpers"
     ></input-block>
 </template>
@@ -19,6 +20,11 @@
     const input = require('./Input.vue');
 
     export default {
-        extends: input
+        extends: input,
+        methods: {
+            change(e) {
+                this.$emit('change-file', e);
+            }
+        }
     }
 </script>

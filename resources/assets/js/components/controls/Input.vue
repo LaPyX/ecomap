@@ -11,6 +11,7 @@
                    :value="value"
                    v-on:input="updateValue($event.target.value)"
                    @keyup.enter="send"
+                   v-on:change="change"
             >
         </div>
 
@@ -75,6 +76,9 @@
             },
             send: function () {
                 this.$emit('send-event');
+            },
+            change: function(e) {
+                this.$emit('change-file', e);
             }
         }
     }

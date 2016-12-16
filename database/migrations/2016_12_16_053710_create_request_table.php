@@ -22,6 +22,7 @@ class CreateRequestTable extends Migration
             $table->string('phone')->nullable();
             $table->text('map_point')->nullable();
             $table->string('photo')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
