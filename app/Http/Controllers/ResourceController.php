@@ -148,6 +148,9 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $requestObject = \App\Request::where('id', $id)->first();
+        $requestObject->delete();
+
+        return redirect(route('requests.index'));
     }
 }

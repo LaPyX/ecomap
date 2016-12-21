@@ -57,6 +57,16 @@
             <a href="/requests" class="btn btn-secondary">Отмена</a>
         </td>
     </tr>
+    <tr>
+        <td colspan="2">
+            <form action="{{ route('requests.destroy', ['request' => $request->id]) }}" method="post">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="delete" />
+
+                <input type="submit" class="btn btn-danger" value="Удалить" onclick="return confirm('Вы уверены?');">
+            </form>
+        </td>
+    </tr>
 </table>
 
 </form>
