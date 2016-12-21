@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div id="map"></div>
         <div class="header">
             <img src="/images/logo.png" title="Экологическая карта">
 
@@ -12,41 +13,39 @@
             </div>
         </div>
         <div class="body">
-            <transition name="slide-left">
-                <div v-if="isMapShown()">
-                    <div id="map"></div>
-                    <transition name="slide-down">
-                        <div class="form" v-if="isFormShown()">
-                            <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
+            <transition name="slide-down">
+                <div class="form" v-if="isFormShown()">
+                    <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
 
-                            <transition name="slide-down" mode="out-in">
-                                <loader v-if="loading"></loader>
-                                <div class="thank-you" v-if="success">
-                                    <div>
-                                        <h1>Спасибо!</h1>
-                                        <p>Ваше сообщение успешно отправлено и будет рассмотрено в ближайшее время.</p>
-                                        <p>Нарушение отобразится на карте после проверки уполномоченными лицами.</p>
-                                    </div>
-                                </div>
-                            </transition>
-
-                            <request-form v-on:success="successSent" :placemark="placemark" v-on:close-form="closeForm"></request-form>
-                        </div>
-
-                        <div class="form" v-if="isInfoShown()">
-                            <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
-
-                            <request-info :item="item" v-on:close-form="closeForm"></request-info>
-                        </div>
-
-                        <div class="form" v-if="isRegionShown()">
-                            <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
-
-                            <request-region :region="region" v-on:close-form="closeForm" v-on:create-request="showRequestForm"></request-region>
+                    <transition name="slide-down" mode="out-in">
+                        <loader v-if="loading"></loader>
+                        <div class="thank-you" v-if="success">
+                            <div>
+                                <h1>Спасибо!</h1>
+                                <p>Ваше сообщение успешно отправлено и будет рассмотрено в ближайшее время.</p>
+                                <p>Нарушение отобразится на карте после проверки уполномоченными лицами.</p>
+                            </div>
                         </div>
                     </transition>
+
+                    <request-form v-on:success="successSent" :placemark="placemark" v-on:close-form="closeForm"></request-form>
                 </div>
-                <div v-if="!isMapShown()">
+
+                <div class="form" v-if="isInfoShown()">
+                    <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
+
+                    <request-info :item="item" v-on:close-form="closeForm"></request-info>
+                </div>
+
+                <div class="form" v-if="isRegionShown()">
+                    <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
+
+                    <request-region :region="region" v-on:close-form="closeForm" v-on:create-request="showRequestForm"></request-region>
+                </div>
+            </transition>
+
+            <transition name="slide-down">
+                <template v-if="!isMapShown()">
                     <div class="page">
                         <h1 style="text-align: center; margin: 0 0 1em;">О проекте</h1>
                         <p>
@@ -62,7 +61,7 @@
                             </tr>
                         </table>
                     </div>
-                </div>
+                </template>
             </transition>
         </div>
 
