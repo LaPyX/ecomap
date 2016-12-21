@@ -57,6 +57,8 @@
             <a href="/requests" class="btn btn-secondary">Отмена</a>
         </td>
     </tr>
+
+</form>
     <tr>
         <td colspan="2">
             <form action="{{ route('requests.destroy', ['request' => $request->id]) }}" method="post">
@@ -68,5 +70,3 @@
         </td>
     </tr>
 </table>
-
-</form>
