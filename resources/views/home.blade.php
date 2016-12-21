@@ -19,7 +19,8 @@
         <script>
             window.Laravel = '<?php echo json_encode([ 'csrfToken' => csrf_token() ]); ?>';
         </script>
-        <script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+        <script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard,package.regions&lang=ru-RU" type="text/javascript"></script>
+        <script src="https://use.fontawesome.com/1e1e181846.js"></script>
         <script src="/js/app.js" type="text/javascript"></script>
     </body>
 </html>

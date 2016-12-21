@@ -15,5 +15,6 @@ class Request extends Model
         'name',
         'phone',
         'status',
+        'comment',
     ];
 }

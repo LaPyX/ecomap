@@ -3954,27 +3954,27 @@ fieldset[disabled] .btn-info.focus {
 
 .btn-warning {
   color: #fff;
-  background-color: #FF8F00;
-  border-color: #e68100;
+  background-color: #FFC107;
+  border-color: #edb100;
 }
 
 .btn-warning:focus, .btn-warning.focus {
   color: #fff;
-  background-color: #cc7200;
-  border-color: #663900;
+  background-color: #d39e00;
+  border-color: #6d5200;
 }
 
 .btn-warning:hover {
   color: #fff;
-  background-color: #cc7200;
-  border-color: #a85e00;
+  background-color: #d39e00;
+  border-color: #af8300;
 }
 
 .btn-warning:active, .btn-warning.active,
 .open > .btn-warning.dropdown-toggle {
   color: #fff;
-  background-color: #cc7200;
-  border-color: #a85e00;
+  background-color: #d39e00;
+  border-color: #af8300;
 }
 
 .btn-warning:active:hover, .btn-warning:active:focus, .btn-warning:active.focus, .btn-warning.active:hover, .btn-warning.active:focus, .btn-warning.active.focus,
@@ -3982,8 +3982,8 @@ fieldset[disabled] .btn-info.focus {
 .open > .btn-warning.dropdown-toggle:focus,
 .open > .btn-warning.dropdown-toggle.focus {
   color: #fff;
-  background-color: #a85e00;
-  border-color: #663900;
+  background-color: #af8300;
+  border-color: #6d5200;
 }
 
 .btn-warning:active, .btn-warning.active,
@@ -3995,12 +3995,12 @@ fieldset[disabled] .btn-info.focus {
 fieldset[disabled] .btn-warning:hover,
 fieldset[disabled] .btn-warning:focus,
 fieldset[disabled] .btn-warning.focus {
-  background-color: #FF8F00;
-  border-color: #e68100;
+  background-color: #FFC107;
+  border-color: #edb100;
 }
 
 .btn-warning .badge {
-  color: #FF8F00;
+  color: #FFC107;
   background-color: #fff;
 }
 
@@ -5690,11 +5690,11 @@ a.label:hover, a.label:focus {
 }
 
 .label-warning {
-  background-color: #FF8F00;
+  background-color: #FFC107;
 }
 
 .label-warning[href]:hover, .label-warning[href]:focus {
-  background-color: #cc7200;
+  background-color: #d39e00;
 }
 
 .label-danger {
@@ -6008,7 +6008,7 @@ a.thumbnail.active {
 }
 
 .progress-bar-warning {
-  background-color: #FF8F00;
+  background-color: #FFC107;
 }
 
 .progress-striped .progress-bar-warning {
@@ -7830,9 +7830,9 @@ html, body {
 .form {
   position: absolute;
   z-index: 3;
-  top: 0;
+  top: 1em;
   right: 0;
-  bottom: 0;
+  bottom: 1em;
   width: 550px;
   background-color: #fff;
   padding: 2em;
@@ -7882,6 +7882,8 @@ html, body {
 }
 
 .header, .footer {
+  display: block;
+  overflow: hidden;
   position: relative;
   z-index: 2;
   background: #449d44;
@@ -7893,14 +7895,32 @@ html, body {
   padding: .75em 1.5em;
 }
 
+.header img, .footer img {
+  float: left;
+  padding: 0 0 0 2em;
+}
+
+.header .navigation, .footer .navigation {
+  float: left;
+  width: 90%;
+  padding: 0 2em;
+  margin-top: .75em;
+}
+
+.header .navigation a, .footer .navigation a {
+  color: #fff;
+  padding: 1em;
+}
+
 .body {
   position: absolute;
-  top: 6em;
+  top: 5em;
   right: 0;
-  bottom: 2em;
+  bottom: 5.5em;
   left: 0;
   display: block;
   overflow: hidden;
+  overflow-y: scroll;
 }
 
 #map {
@@ -7918,10 +7938,27 @@ html, body {
   bottom: 0;
   right: 0;
   left: 0;
+  color: #999;
+  padding-right: 2em;
 }
 
 .footer img {
-  width: 56px;
+  width: 100px;
+}
+
+.footer .credentials {
+  display: inline-block;
+  margin-left: 1.5em;
+  margin-top: .5em;
+  line-height: 1.3;
+}
+
+.footer .socials {
+  margin-top: .75em;
+}
+
+.footer .socials img {
+  width: auto;
 }
 
 .slide-fade-enter-active {
@@ -8054,6 +8091,42 @@ html, body {
   z-index: 100;
   padding: 2em;
   text-align: center;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status i {
+  font-size: 1.5em;
+  position: relative;
+  top: .1em;
+}
+
+.close {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+  font-weight: 200;
+  font-size: 14px;
+  text-transform: uppercase;
+  width: 16px;
+  height: 16px;
+  background: url("/images/cancel.png") center no-repeat;
+  opacity: .8;
+  z-index: 100;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.page {
+  padding: 2em 3em;
+}
+
+.text-warning {
+  color: #FFC107;
 }
 
 /*# sourceMappingURL=app.css.map */

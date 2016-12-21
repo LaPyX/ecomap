@@ -1,39 +1,83 @@
 <template>
     <div>
-        <div id="map"></div>
         <div class="header">
-            <div class="container">
-                <img src="/images/logo.png" title="Экологическая карта">
+            <img src="/images/logo.png" title="Экологическая карта">
 
-                <a href="#" class="btn btn-white pull-right" v-on:click="showRequestForm">Сообщить о нарушении</a>
+            <div class="navigation">
+                <a href="#" @click.prevent="showMain">Главная</a>
+                <a href="#" @click.prevent="about">О проекте</a>
+                <a href="#">Эксперты</a>
+                <a href="#">Инфографика</a>
+                <a href="#">Контакты</a>
             </div>
         </div>
         <div class="body">
-            <transition name="slide-down">
-                <div class="form" v-if="isFormShown()">
-                    <transition name="slide-down" mode="out-in">
-                        <loader v-if="loading"></loader>
-                        <div class="thank-you" v-if="success">
-                            <div>
-                                <h1>Спасибо!</h1>
-                                <p>Ваше сообщение успешно отправлено и будет рассмотрено в ближайшее время.</p>
-                                <p>Нарушение отобразится на карте после проверки уполномоченными лицами.</p>
-                            </div>
+            <transition name="slide-left">
+                <div v-if="isMapShown()">
+                    <div id="map"></div>
+                    <transition name="slide-down">
+                        <div class="form" v-if="isFormShown()">
+                            <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
+
+                            <transition name="slide-down" mode="out-in">
+                                <loader v-if="loading"></loader>
+                                <div class="thank-you" v-if="success">
+                                    <div>
+                                        <h1>Спасибо!</h1>
+                                        <p>Ваше сообщение успешно отправлено и будет рассмотрено в ближайшее время.</p>
+                                        <p>Нарушение отобразится на карте после проверки уполномоченными лицами.</p>
+                                    </div>
+                                </div>
+                            </transition>
+
+                            <request-form v-on:success="successSent" :placemark="placemark" v-on:close-form="closeForm"></request-form>
+                        </div>
+
+                        <div class="form" v-if="isInfoShown()">
+                            <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
+
+                            <request-info :item="item" v-on:close-form="closeForm"></request-info>
+                        </div>
+
+                        <div class="form" v-if="isRegionShown()">
+                            <a href="#" class="close" v-on:click.prevent="closeForm" ></a>
+
+                            <request-region :region="region" v-on:close-form="closeForm" v-on:create-request="showRequestForm"></request-region>
                         </div>
                     </transition>
-
-                    <request-form v-on:success="successSent" :placemark="placemark" v-on:close-form="closeForm"></request-form>
                 </div>
+                <div v-if="!isMapShown()">
+                    <div class="page">
+                        <h1 style="text-align: center; margin: 0 0 1em;">О проекте</h1>
+                        <p>
+                            Президент России, лидер Общероссийского народного фронта Владимир Путин по итогам «Форума действий» ОНФ, выступил за создание общественной Интернет-карты, на который любой пользователь мог бы оставить сообщение и обозначить на ней незаконную свалку. В исполнении поручения Президента, Центр общественного мониторинга ОНФ по проблемам экологии и защиты леса в Год экологии (2017) запустил «Интерактивную карту незаконных свалок».
+                        </p>
 
-                <div class="form" v-if="isInfoShown()">
-                    <request-info :item="item" v-on:close-form="closeForm"></request-info>
+                        <h2 style="text-align: center; margin: 1em 0;">Партнёры:</h2>
+
+                        <table style="width: 60%; margin: 0 auto;">
+                            <tr>
+                                <td style="text-align: center;"><img src="/images/ccrf.png" width=300></td>
+                                <td style="text-align: center;"><img src="/images/russia-today.png"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </transition>
         </div>
 
         <div class="footer">
-            <div class="container">
+            <div class="pull-left">
                 <img src="/images/logo_onf.png" title="Общероссийский народный фронт">
+
+                <p class="credentials">
+                    Проект Общероссийского<br>
+                    Народного Фронта
+                </p>
+            </div>
+
+            <div class="socials pull-right">
+                <img src="/images/socials.png" >
             </div>
         </div>
     </div>
@@ -43,6 +87,7 @@
     export default {
         data: function() {
             return {
+                page: null,
                 loading: false,
                 state: null,
                 placemark: null,
@@ -50,7 +95,10 @@
                 requests: [],
                 item: null,
                 busy: true,
-                ymap: null
+                ymap: null,
+                region: null,
+                lastCollection: 0,
+                lastActiveRegion: 0,
             }
         },
         methods: {
@@ -64,6 +112,12 @@
             },
             isInfoShown() {
                 return 'info' == this.state;
+            },
+            isRegionShown() {
+                return 'region' == this.state;
+            },
+            isMapShown() {
+                return null == this.page;
             },
             successSent() {
                 this.success = true;
@@ -89,10 +143,16 @@
                 this.state = null;
                 this.item = null;
                 this.busy = true;
-
+                this.region = null;
 
                 this.ymap.geoObjects.remove(this.placemark);
                 this.placemark = null;
+            },
+            about() {
+                this.page = true;
+            },
+            showMain() {
+                this.page = null;
             }
         },
         mounted() {
@@ -105,7 +165,7 @@
             function init(){
                 parent.ymap = new ymaps.Map ("map", {
                     center: [55.76, 37.64],
-                    zoom: 7
+                    zoom: 5
                 });
 
                 parent.ymap.controls.add(
@@ -114,22 +174,28 @@
                 parent.ymap.behaviors.enable('scrollZoom');
 
                 parent.ymap.events.add('click', function (e) {
-                    if (parent.busy) {
-                        return false;
-                    }
 
-                    if (null !== parent.placemark) {
-                        parent.ymap.geoObjects.remove(parent.placemark);
-                    }
-
-                    parent.placemark = new ymaps.Placemark(e.get('coordPosition'), {}, { iconColor: 'red' });
-                    parent.ymap.geoObjects.add(parent.placemark);
                 });
 
                 setTimeout(function() {
                     var i = 0;
                     for (var request in parent.requests) {
-                        var point = new ymaps.Placemark(parent.requests[request].map_point);
+                        var image = 'pointer_pending.png'
+                        if (1 == parent.requests[request].status) {
+                            image = 'pointer_pending.png';
+                        }
+                        if (2 == parent.requests[request].status) {
+                            image = 'pointer_in_progress.png';
+                        }
+                        if (3 == parent.requests[request].status) {
+                            image = 'pointer_done.png';
+                        }
+
+                        var point = new ymaps.Placemark(parent.requests[request].map_point, {}, {
+                            iconImageHref: '/images/' + image,
+                            iconImageSize: [32, 32],
+                            iconImageOffset: [-16, -32]
+                        });
                         point.__id = i++;//parent.requests[request].id;
 
                         point.events.add('click', function (event) {
@@ -142,6 +208,61 @@
                         parent.ymap.geoObjects.add(point);
                     }
                 }, 1000);
+
+                ymaps.regions.load('RU', {
+                    lang: 'ru',
+                    quality: 1
+                }).then(function (result) {
+                    var regions = result.geoObjects; // ссылка на коллекцию GeoObjectCollection
+
+                    regions.each(function (reg) {
+                        reg.options.set('preset', {
+                            fillColor: '#E6EE9C',
+                            opacity: 0.5
+                        });
+                    });
+
+
+                    regions.events.add('click', function (event) {
+                        if ('form' == parent.state) {
+                            if (parent.busy) {
+                                return false;
+                            }
+
+                            if (null !== parent.placemark) {
+                                parent.ymap.geoObjects.remove(parent.placemark);
+                            }
+
+                            parent.placemark = new ymaps.Placemark(event.get('coordPosition'), {}, {
+                            iconImageHref: '/images/pointer_inactive.png',
+                            iconImageSize: [32, 32],
+                            iconImageOffset: [-16, -32]
+                        });
+                            parent.ymap.geoObjects.add(parent.placemark);
+                            return;
+                        }
+
+                        var target = event.get('target');
+                        if (parent.lastActiveRegion) {
+                            parent.lastActiveRegion.options.set('preset', {
+                                fillColor: '#E6EE9C',
+                                opacity: 0.5
+                            });
+                        }
+                        parent.lastActiveRegion = target;
+                        parent.lastActiveRegion.options.set('preset', {
+                            fillColor: '#8BC34A',
+                            opacity: 0.5
+                        });
+
+                        parent.state = 'region';
+                        parent.region = target.properties.get('name');
+                    });
+
+                    parent.ymap.geoObjects.add(regions);
+                }, function () {
+
+                });
             }
         }
     }

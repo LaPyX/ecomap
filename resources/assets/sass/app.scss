@@ -55,9 +55,9 @@ html, body {
 .form {
   position: absolute;
   z-index: 3;
-  top: 0;
+  top: 1em;
   right: 0;
-  bottom: 0;
+  bottom: 1em;
   width: 550px;
   background-color: #fff;
   padding: 2em;
@@ -107,6 +107,8 @@ html, body {
 }
 
 .header {
+  display: block;
+  overflow: hidden;
   position: relative;
   z-index: 2;
   background: $brand-primary;
@@ -116,16 +118,34 @@ html, body {
   .btn {
     padding: .75em 1.5em;
   }
+
+  img {
+    float: left;
+    padding: 0 0 0 2em;
+  }
+
+  .navigation {
+    float: left;
+    width: 90%;
+    padding: 0 2em;
+    margin-top: .75em;
+
+    a {
+      color: #fff;
+      padding: 1em;
+    }
+  }
 }
 
 .body {
   position: absolute;
-  top: 6em;
+  top: 5em;
   right: 0;
-  bottom: 2em;
+  bottom: 5.5em;
   left: 0;
   display: block;
   overflow: hidden;
+  overflow-y: scroll;
 }
 
 #map {
@@ -144,9 +164,26 @@ html, body {
   bottom: 0;
   right: 0;
   left: 0;
+  color: #999;
+  padding-right: 2em;
 
   img {
-    width: 56px;
+    width: 100px;
+  }
+
+  .credentials {
+    display: inline-block;
+    margin-left: 1.5em;
+    margin-top: .5em;
+    line-height: 1.3;
+  }
+
+  .socials {
+    margin-top: .75em;
+
+    img {
+      width: auto;
+    }
   }
 }
 
@@ -272,4 +309,42 @@ html, body {
   z-index: 100;
   padding: 2em;
   text-align: center;
+}
+
+.status {
+  font-weight: bold;
+
+  i {
+    font-size: 1.5em;
+    position: relative;
+    top: .1em;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+  font-weight: 200;
+  font-size: 14px;
+  text-transform: uppercase;
+
+  width: 16px;
+  height: 16px;
+
+  background: url('/images/cancel.png') center no-repeat;
+  opacity: .8;
+  z-index: 100;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.page {
+  padding: 2em 3em;
+}
+
+.text-warning {
+  color: #FFC107;
 }

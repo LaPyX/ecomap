@@ -101,7 +101,11 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        //
+        $request = \App\Request::find($id);
+
+        return view('requests.show', [
+            'request' => $request
+        ]);
     }
 
     /**
@@ -112,11 +116,11 @@ class ResourceController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $requestObject = \App\Request::where('id', $id)->first();
-        $requestObject->status = $request->status;
-        $requestObject->save();
+        $requestObject = \App\Request::find($id);
 
-        return redirect('/requests');
+        return view('requests.edit', [
+            'request' => $requestObject
+        ]);
     }
 
     /**
@@ -128,7 +132,12 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $requestObject = \App\Request::where('id', $id)->first();
+        $requestObject->status = $request->status;
+        $requestObject->comment = $request->comment;
+        $requestObject->save();
+
+        return redirect(route('requests.index'));
     }
 
     /**

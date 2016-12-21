@@ -1,23 +1,27 @@
 <template>
     <div>
-        <p class="small text-danger" v-if="isStatusPending()">
-            На рассмотрении
+        <p class="status small text-danger" v-if="isStatusPending()">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Обращение находится в стадии рассмотрения
         </p>
 
-        <p class="small text-info" v-if="isStatusDelivered()">
-            Соответствующие органы осведомлены
+        <p class="status small text-warning" v-if="isStatusDelivered()">
+            <i class="fa fa-hourglass" aria-hidden="true"></i> В работе
         </p>
 
-        <p class="small text-success" v-if="isStatusInProgress()">
-            В работе
+        <p class="status small text-success" v-if="isStatusInProgress()">
+            <i class="fa fa-check" aria-hidden="true"></i> Проблема решена
+        </p>
+
+        <p v-if="$parent.requests[item].comment" style="margin: 1em 0 2.5em;">
+            <i>{{ $parent.requests[item].comment }}</i>
         </p>
 
         <p>
-            <b>Тема:</b><br>{{ $parent.requests[item].subject }}
+            <strong>{{ $parent.requests[item].subject }}</strong>
         </p>
 
         <p>
-            <b>Описание:</b><br>{{ $parent.requests[item].description }}
+            {{ $parent.requests[item].description }}
         </p>
         <p>
             <b>Адрес:</b><br>{{ $parent.requests[item].address }}
