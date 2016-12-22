@@ -8,7 +8,6 @@
                 <a href="#" @click.prevent="showMain">Главная</a>
                 <a href="#" @click.prevent="about">О проекте</a>
                 <a href="#">Эксперты</a>
-                <a href="#">Инфографика</a>
                 <a href="#">Контакты</a>
             </div>
         </div>
@@ -72,13 +71,13 @@
                 <img src="/images/logo_onf.png" title="Общероссийский народный фронт">
 
                 <p class="credentials">
-                    Проект Общероссийского<br>
-                    Народного Фронта
+                    <strong>Интерактивная карта незаконных свалок</strong><br>
+                    Проект Общероссийского Народного Фронта
                 </p>
             </div>
 
             <div class="socials pull-right">
-                <img src="/images/socials.png" >
+                Мы в соц. сетях: <img src="/images/socials.png" >
             </div>
         </div>
     </div>

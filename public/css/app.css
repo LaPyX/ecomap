@@ -7927,7 +7927,7 @@ html, body {
 
 .body {
   position: absolute;
-  top: 5em;
+  top: 5.5em;
   right: 0;
   bottom: 5.5em;
   left: 0;
@@ -7971,6 +7971,7 @@ html, body {
 }
 
 .footer .socials img {
+  float: none;
   width: auto;
 }
 
