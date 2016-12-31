@@ -28,7 +28,7 @@
         </p>
 
         <p v-for="photo in $parent.requests[this.item].photo" style="margin-top: 3em; display: block;">
-            <img :src="photo" style="max-width: 100%;">
+            <a :href="photo" class="fancybox"><img :src="photo" style="max-width: 100%;"></a>
         </p>
 
         <a href="#" class="btn btn-primary" v-on:click.prevent="hideForm" style="margin-top: 3em;">Закрыть</a>

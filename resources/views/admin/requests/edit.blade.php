@@ -34,7 +34,13 @@
             </tr>
             <tr>
                 <td>Фото</td>
-                <td><a href="{{ $request->photo }}" target="_blank"><img src="{{ $request->photo }}" style="width: 100px";></a></td>
+                <td>
+                    @if (is_array($request->photo))
+                        @foreach($request->photo as $ph)
+                            <a href="{{ $ph }}" rel="gallery" class="fancybox" target="_blank"><img src="{{ $ph }}" style="width: 100px";></a>
+                        @endforeach
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Статус</td>

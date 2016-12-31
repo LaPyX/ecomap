@@ -47,6 +47,7 @@ class RequestsController extends Controller
     public function edit(Request $request, $id)
     {
         $requestObject = \App\Request::find($id);
+        $requestObject->photo = @unserialize($requestObject->photo);
 
         return view('admin.requests.edit', [
             'request' => $requestObject
