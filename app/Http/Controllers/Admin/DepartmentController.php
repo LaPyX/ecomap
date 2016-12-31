@@ -47,7 +47,7 @@ class DepartmentController extends Controller
         $inputs     = $request->all();
         $department = Department::create($inputs);
 
-        $password = 'bmw123';//str_random();
+        $password = str_random();
         $login    = strtolower(str_random(6) . '@ecomap.ru');
 
         User::create([

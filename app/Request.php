@@ -14,6 +14,7 @@ class Request extends Model
         'address',
         'name',
         'phone',
+        'email',
         'status',
         'comment',
         'region_name'

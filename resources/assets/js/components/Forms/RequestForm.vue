@@ -38,7 +38,13 @@
             <text-block placeholder="Номер телефона"
                         v-model="fields.phone.value"
                         :error="fields.phone.error"
-                        :valid="fields.phone.valid"></text-block>
+                        :valid="fields.phone.valid"
+                        hint="Контакты нужны для оповещения о статусе вашей заявки"></text-block>
+
+            <email-block placeholder="Email"
+                        v-model="fields.email.value"
+                        :error="fields.email.error"
+                        :valid="fields.email.valid"></email-block>
         </div>
 
 
@@ -87,6 +93,11 @@
                         valid: null,
                         error: null,
                     },
+                    email: {
+                        value: '',
+                        valid: null,
+                        error: null,
+                    },
                     phone: {
                         value: '',
                         valid: null,
@@ -121,6 +132,7 @@
 
                 formData.append('name', this.fields.name.value);
                 formData.append('phone', this.fields.phone.value);
+                formData.append('email', this.fields.email.value);
                 formData.append('region_name', this.$parent.region);
 
                 if (null !== this.placemark) {
