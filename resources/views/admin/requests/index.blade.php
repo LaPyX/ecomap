@@ -15,7 +15,7 @@
             <tr>
                 <td>{{ $request->id }}</td>
                 <td>
-                    <a href="{{ $request->photo }}" target="_blank"><img src="{{ $request->photo }}" style="width: 100px";></a>
+                    <a href="{{ $request->photo }}" target="_blank" class="fancybox"><img src="{{ $request->photo }}" style="width: 100px";></a>
                 </td>
                 <td>
                     <a href="{{ route('admin.requests.edit', ['request' => $request->id]) }}">{{ $request->subject }}</a>
