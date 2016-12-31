@@ -1,0 +1,84 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+// Variables
+@import "variables";
+@import "loader";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+.text-info {
+  color: $brand-info;
+}
+
+.text-danger {
+  color: $brand-danger;
+}
+
+.text-success {
+  color: $brand-success;
+}
+
+.text-warning {
+  color: #FFC107;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+}
+
+.body {
+  background: #fff;
+  padding: 1.5em;
+}
+
+.navigation {
+  padding: 0;
+  margin: .5em 0 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+    list-style: none;
+    display: block;
+    padding: .5em 0;
+  }
+
+  i {
+    display: block;
+    margin-bottom: .25em;
+    font-style: normal;
+  }
+
+  ul {
+    padding: 0;
+    margin-left: 1em;
+    font-size: .8em;
+    list-style: none;
+
+    li {
+
+    }
+  }
+}
+
+h1 {
+  margin: 0 0 .5em;
+}
+
+label {
+  font-weight: normal;
+}
+
+.status {
+  font-size: 1em;
+
+  i {
+    position: relative;
+    margin-right: .5em;
+  }
+}

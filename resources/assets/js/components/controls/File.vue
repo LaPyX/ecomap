@@ -13,6 +13,7 @@
             v-on:send-event="send"
             v-on:change-file="change"
             :hideHelpers="hideHelpers"
+            :multiple="multiple"
     ></input-block>
 </template>
 

@@ -22,11 +22,12 @@
                             :valid="fields.description.valid"></textarea-block>
 
             <div class="form__header">Дополнительная информация</div>
-            <file-block label="Фото" hint="Один файл, не более 5 Мб"
+            <file-block label="Фото и/или видео" hint="Несколько файлов, не более 50 Мб"
                         v-model="fields.photo.value"
                         :error="fields.photo.error"
                         :valid="fields.photo.valid"
-                        @change-file="fileChange"></file-block>
+                        @change-file="fileChange"
+                        multiple="true"></file-block>
 
             <div class="form__header">Контактная информация</div>
             <text-block placeholder="Ваше ФИО" hint="Видны только администрации сайта"
@@ -103,7 +104,8 @@
                 if (!files.length) {
                     return;
                 }
-                this.file = files[0];
+                console.log(files);
+                this.file = files;
             },
             submit: function() {
                 this.clearErrors();
@@ -112,9 +114,14 @@
                 formData.append('subject', this.fields.subject.value);
                 formData.append('description', this.fields.description.value);
                 formData.append('address', this.fields.address.value);
-                formData.append('photo', this.file);
+
+                for (var file in this.file) {
+                    formData.append('photo[]', this.file[file]);
+                }
+
                 formData.append('name', this.fields.name.value);
                 formData.append('phone', this.fields.phone.value);
+                formData.append('region_name', this.$parent.region);
 
                 if (null !== this.placemark) {
                     formData.append('map_point', this.placemark.geometry.getCoordinates());

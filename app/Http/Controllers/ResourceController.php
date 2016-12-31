@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
+use App\EventNotification;
+use App\Personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
@@ -9,44 +12,24 @@ use Illuminate\Validation\ValidationException;
 
 class ResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('requests.index', [
-            'requests' => \App\Request::orderBy('created_at', 'desc')->get()
-        ]);
-    }
-
     public function ajax()
     {
         $requests = \App\Request::where('status', '>=', 1)->get();
         foreach ($requests as $key => $request) {
             $requests[$key]['map_point'] = unserialize($requests[$key]['map_point']);
+            $requests[$key]['photo']     = @unserialize($requests[$key]['photo']);
         }
 
         return response()->json([
-            'requests' => $requests
+            'requests' => $requests,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -57,33 +40,39 @@ class ResourceController extends Controller
             $this->validate($request, [
                 'subject'     => 'required|min:3|max:255',
                 'address'     => 'required|min:3|max:255',
-                'description'     => 'required',
-                'photo'     => '',
-                'map_point'     => '',
-                'name'     => 'required|min:3|max:255',
-                'phone'     => 'required|min:3|max:255',
+                'description' => 'required',
+                'photo'       => '',
+                'map_point'   => '',
+                'name'        => 'required|min:3|max:255',
+                'phone'       => 'required|min:3|max:255',
             ]);
 
-            $attributes = $request->all();
+            $attributes              = $request->all();
             $attributes['map_point'] = serialize(explode(',', $attributes['map_point']));
-            $attributes['status'] = 0;
-            $requestObject = \App\Request::create($attributes);
+            $attributes['status']    = 0;
+            $requestObject           = \App\Request::create($attributes);
 
             if ($request->file('photo')) {
                 $path = '/images/requests/';
 
-                if ('' !== $requestObject->photo) {
-                    Storage::delete(base_path() . $path . $requestObject->image);
+                $files = [];
+
+                foreach ($request->file('photo') as $file) {
+                    $imageName = $requestObject->id . '-' . str_random() . '.' . $file->getClientOriginalExtension();
+                    $file->move(base_path() . '/public' . $path, $imageName);
+                    $files[] = $path . $imageName;
                 }
 
-                $imageName = $requestObject->id . '.' . $request->file('photo')->getClientOriginalExtension();
-                $request->photo->move(base_path() . '/public' . $path, $imageName);
-                $requestObject->photo = $path . $imageName;
+                $requestObject->photo = serialize($files);
                 $requestObject->save();
             }
-            
+
+            // Create new user
+            // Notify user and admin
+            EventNotification::send($requestObject);
+
             return response()->json([
-                'status' => 'ok'
+                'status' => 'ok',
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -93,64 +82,19 @@ class ResourceController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function getDepartmentInfo(Request $request)
     {
-        $request = \App\Request::find($id);
+        $department = Department::where('region_name', $request->region_name)->first();
 
-        return view('requests.show', [
-            'request' => $request
+        $department->description = nl2br($department->description);
+        $department->contacts    = nl2br($department->contacts);
+
+        $department->personal = Personal::where('department_id', $department->id)->get();
+
+        return response()->json([
+            'status'     => 'ok',
+            'department' => $department,
+            'requested'  => $request->region_name,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $id)
-    {
-        $requestObject = \App\Request::find($id);
-
-        return view('requests.edit', [
-            'request' => $requestObject
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $requestObject = \App\Request::where('id', $id)->first();
-        $requestObject->status = $request->status;
-        $requestObject->comment = $request->comment;
-        $requestObject->save();
-
-        return redirect(route('requests.index'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $requestObject = \App\Request::where('id', $id)->first();
-        $requestObject->delete();
-
-        return redirect(route('requests.index'));
     }
 }

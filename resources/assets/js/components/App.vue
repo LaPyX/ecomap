@@ -224,6 +224,8 @@
 
 
                     regions.events.add('click', function (event) {
+                        var target = event.get('target');
+
                         if ('form' == parent.state) {
                             if (parent.busy) {
                                 return false;
@@ -234,15 +236,15 @@
                             }
 
                             parent.placemark = new ymaps.Placemark(event.get('coordPosition'), {}, {
-                            iconImageHref: '/images/pointer_inactive.png',
-                            iconImageSize: [32, 32],
-                            iconImageOffset: [-16, -32]
-                        });
+                                iconImageHref: '/images/pointer_inactive.png',
+                                iconImageSize: [32, 32],
+                                iconImageOffset: [-16, -32]
+                            });
                             parent.ymap.geoObjects.add(parent.placemark);
+                            parent.region = target.properties.get('name');
                             return;
                         }
 
-                        var target = event.get('target');
                         if (parent.lastActiveRegion) {
                             parent.lastActiveRegion.options.set('preset', {
                                 fillColor: '#E6EE9C',
@@ -251,9 +253,12 @@
                         }
                         parent.lastActiveRegion = target;
                         parent.lastActiveRegion.options.set('preset', {
-                            fillColor: '#8BC34A',
-                            opacity: 0.5
+                            fillColor: '',
+                            opacity: 0
                         });
+
+                        var coord = event.get('coordPosition');
+                        parent.ymap.setCenter(coord);
 
                         parent.state = 'region';
                         parent.region = target.properties.get('name');

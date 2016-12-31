@@ -16,5 +16,6 @@ class Request extends Model
         'phone',
         'status',
         'comment',
+        'region_name'
     ];
 }

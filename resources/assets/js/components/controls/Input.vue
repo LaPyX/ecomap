@@ -12,6 +12,7 @@
                    v-on:input="updateValue($event.target.value)"
                    @keyup.enter="send"
                    v-on:change="change"
+                   multiple
             >
         </div>
 
@@ -49,6 +50,9 @@
                 default: ''
             },
             value: { },
+            multiple: {
+                default: false
+            },
             hint: {
                 default: ''
             },

@@ -1,34 +1,19 @@
 <template>
     <div>
         <div class="text" style="margin: 2em 0;">
-            <template v-if="isMoscow()">
-                <p><strong>РЕГИОНАЛЬНОЕ ОТДЕЛЕНИЕ ОНФ В МОСКОВСКОЙ ОБЛАСТИ</strong></p>
+            <p><strong>{{ name }}</strong></p>
 
-                <p>
-                    Контакты: 123001, г. Москва, Большой Патриарший переулок, дом 3 , стр.1<br>
-                    8 (495) 981-56-99<br>
-                    50region@onf.ru
-                </p>
+            <div v-html="description"></div>
 
-                <p>
-                    ГЛАВА ИСПОЛКОМА: Даутов Алексей Леонидович<br>
-                    Координатор РГ по проблемам экологии и защиты леса: Антон Юрьевич Хлынов
-                </p>
-            </template>
+            <div v-html="contacts"></div>
 
-            <template v-if="isKrasnoyarsk()">
-                <p><strong>РЕГИОНАЛЬНОЕ ОТДЕЛЕНИЕ ОНФ В КРАСНОЯРСКОМ КРАЕ</strong></p>
-
-                <p>
-                    Контакты: 660 049, Красноярский край, г. Красноярск, ул. Ленина, д. 49<br>
-                    8 (391) 200-32-01<br>
-                    24region@onf.ru
-                </p>
-
-                <p>
-                    ГЛАВА ИСПОЛКОМА: Ларионова Оксана Владимировна
-                </p>
-            </template>
+            <div class="personals" style="margin: 2em 0;">
+                <div class="personal" v-for="item in personal" style="margin: 0 0 1em;">
+                    <strong>{{ item.name }}</strong><br>
+                    {{ item.position }}<br>
+                    {{ item.contacts }}
+                </div>
+            </div>
         </div>
 
         <div>
@@ -43,6 +28,14 @@
         props: {
             region: ''
         },
+        data: function() {
+            return {
+                name: '',
+                description: '',
+                contacts: '',
+                personal: []
+            }
+        },
         methods: {
             isMoscow() {
                 return 'Московская область' == this.region;
@@ -55,7 +48,33 @@
             },
             hideForm() {
                 this.$emit('close-form');
+            },
+            getData() {
+                this.name = this.region;
+                this.description = '';
+                this.contacts = '';
+                this.personal = null;
+
+                var formData = new FormData();
+                formData.append('region_name', this.region);
+
+                this.$http.post('/departments', formData).then((response) => {
+                    var response = response.body;
+
+                    if (response.status == 'ok') {
+                        this.name = response.department.name;
+                        this.description = response.department.description;
+                        this.contacts = response.department.contacts;
+                        this.personal = response.department.personal;
+                    }
+                });
             }
+        },
+        watch: {
+            region: 'getData'
+        },
+        mounted() {
+            this.getData();
         }
     }
 </script>

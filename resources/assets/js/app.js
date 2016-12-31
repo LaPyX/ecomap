@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+import fancyBox from 'vue-fancybox';
 
 Vue.http.interceptors.push(function(request, next) {
     var input = JSON.parse(Laravel);
