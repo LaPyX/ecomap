@@ -15,10 +15,18 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ('' != $request->search) {
+            $departments = Department::where('region_name', 'LIKE', '%' . $request->search . '%')->orWhere('name', 'LIKE', '%' . $request->search . '%')->orderBy('region_name', 'asc')->get();
+        } else {
+            $departments = Department::orderBy('region_name', 'asc')->get();
+        }
+
+
         return view('admin.departments.index', [
-            'departments' => Department::orderBy('region_name', 'asc')->get(),
+            'departments' => $departments,
+            'search' => '' != $request->search ? $request->search : false,
         ]);
     }
 

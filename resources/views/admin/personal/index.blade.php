@@ -5,6 +5,10 @@
 
     <a class="btn btn-primary" href="{{ route('admin.personal.create') }}">Создать сотрудника</a>
 
+    <form class="pull-right">
+        <input class="form-control" type="text" placeholder="Поиск" name="search">
+    </form>
+
     <table class="table" style="margin-top: .75em;">
         <thead>
         <td>ФИО</td>

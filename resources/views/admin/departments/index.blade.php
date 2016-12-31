@@ -5,11 +5,21 @@
 
     <a class="btn btn-primary" href="{{ route('admin.departments.create') }}">Создать отделение</a>
 
+    <form class="pull-right">
+        <input class="form-control" type="text" placeholder="Поиск" name="search">
+    </form>
+    <div class="clearfix"></div>
+
+    @if ($search)
+        <p style="margin-top: 1em;">
+        Поиск: "{{ $search }}"
+        </p>
+    @endif
+
     <table class="table" style="margin-top: .75em;">
         <thead>
         <td>Регион</td>
         <td>Название</td>
-        <td>Контактных лиц</td>
         </thead>
         @forelse($departments as $department)
             <tr>

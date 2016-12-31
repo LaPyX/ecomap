@@ -18,8 +18,14 @@ class RequestsController extends Controller
             $request = \App\Request::where('region_name', $department->region_name);
         }
 
+        $var = $request->orderBy('created_at', 'desc')->get();
+        foreach ($var as $key => $value) {
+            $photos = @unserialize($value['photo']);
+            $var[$key]['photo'] = $photos[0];
+        }
+
         return view('admin.requests.index', [
-            'requests' => $request->orderBy('created_at', 'desc')->get()
+            'requests' => $var
         ]);
     }
 
