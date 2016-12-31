@@ -253,8 +253,9 @@
                         }
                         parent.lastActiveRegion = target;
                         parent.lastActiveRegion.options.set('preset', {
-                            fillColor: '',
-                            opacity: 0
+                            fillColor: 'rgba(0,0,0,0)',
+                            strokeColor: '4CAF50',
+                            strokeWidth: 3
                         });
 
                         var coord = event.get('coordPosition');
