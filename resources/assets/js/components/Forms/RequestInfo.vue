@@ -27,9 +27,9 @@
             <b>Адрес:</b><br>{{ $parent.requests[item].address }}
         </p>
 
-        <div class="list" v-for="(n, index) in $parent.requests[this.item].photo" :data-index="index" style="margin-top: 3em; display: block;">
-            <img @click="open($event)" :src="n" style="max-width: 100%;">
-        </div>
+        <p v-for="photo in $parent.requests[this.item].photo" style="margin-top: 3em; display: block;">
+            <img :src="photo" style="max-width: 100%;">
+        </p>
 
         <a href="#" class="btn btn-primary" v-on:click.prevent="hideForm" style="margin-top: 3em;">Закрыть</a>
     </div>
