@@ -11,7 +11,11 @@
         <div class="form-group row">
             <label for="" class="col-sm-3">Регион</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" name="region_name" value="{{ old('region_name', $department->region_name) }}" required>
+                <select name="region_name" class="form-control">
+                    @foreach($regions as $region)
+                        <option @if(old('region_name', $department->region_name) == $region) selected="selected" @endif>{{ $region }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 

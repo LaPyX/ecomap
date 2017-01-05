@@ -37,7 +37,9 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.departments.create');
+        return view('admin.departments.create', [
+            'regions' => Department::REGIONS_LIST
+        ]);
     }
 
     /**
@@ -97,6 +99,7 @@ class DepartmentController extends Controller
 
         return view('admin.departments.edit', [
             'department' => $department,
+            'regions' => Department::REGIONS_LIST
         ]);
     }
 
