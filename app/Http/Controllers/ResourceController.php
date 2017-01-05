@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\EventNotification;
 use App\Personal;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
@@ -37,6 +39,8 @@ class ResourceController extends Controller
         App::setLocale('ru');
 
         try {
+            $id = \App\Request::generateId();
+
             $this->validate($request, [
                 'subject'     => 'required|min:3|max:255',
                 'address'     => 'required|min:3|max:255',
@@ -50,6 +54,17 @@ class ResourceController extends Controller
             $attributes              = $request->all();
             $attributes['map_point'] = serialize(explode(',', $attributes['map_point']));
             $attributes['status']    = 0;
+            $attributes['id']        = $id;
+
+            // Create new user if not authorized
+            $password = str_random();
+
+            $user = User::create([
+                'name'     => $attributes['name'],
+                'email'    => $attributes['email'],
+                'password' => bcrypt($password),
+            ]);
+
             $requestObject           = \App\Request::create($attributes);
 
             if ($request->file('photo')) {
@@ -67,8 +82,8 @@ class ResourceController extends Controller
                 $requestObject->save();
             }
 
-            // Create new user
-            // Notify user and admin
+            $requestObject->password = $password;
+
             EventNotification::send($requestObject);
 
             return response()->json([

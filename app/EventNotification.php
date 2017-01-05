@@ -9,7 +9,6 @@ class EventNotification extends Model
 {
     public static function send(Request $requestObject)
     {
-        // Get personal
         $personal = Personal::whereHas('department', function ($query) use ($requestObject) {
             $query->where('region_name', $requestObject->region_name);
         })->get();
@@ -26,7 +25,6 @@ class EventNotification extends Model
             });
         }
 
-        // Get user email
         if ('' == $requestObject->email) {
             return;
         }
@@ -36,7 +34,5 @@ class EventNotification extends Model
 
             $m->to($requestObject->email, $requestObject->name)->subject('Ваше обращение принято');
         });
-
-        // Send notifications
     }
 }
