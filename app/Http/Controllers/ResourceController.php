@@ -65,7 +65,9 @@ class ResourceController extends Controller
                 'password' => bcrypt($password),
             ]);
 
-            $requestObject           = \App\Request::create($attributes);
+            $attributes['user_id'] = $user->id;
+
+            $requestObject = \App\Request::create($attributes);
 
             if ($request->file('photo')) {
                 $path = '/images/requests/';
@@ -82,6 +84,7 @@ class ResourceController extends Controller
                 $requestObject->save();
             }
 
+            $requestObject->id       = $id;
             $requestObject->password = $password;
 
             EventNotification::send($requestObject);

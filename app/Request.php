@@ -18,7 +18,8 @@ class Request extends Model
         'email',
         'status',
         'comment',
-        'region_name'
+        'region_name',
+        'user_id'
     ];
 
     public static function generateId()
@@ -27,5 +28,10 @@ class Request extends Model
         $out .= '-' . date('YmdHis') . '-' . random_int(1000, 9999);
 
         return $out;
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\\User', 'user_id');
     }
 }
