@@ -13,7 +13,7 @@ class AddRequestUserField extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('requests', function (Blueprint $table) {
             $table->integer('user_id')->nullable();
         });
     }
