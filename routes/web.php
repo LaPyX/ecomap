@@ -14,3 +14,4 @@ Auth::routes();
 //Route::get('/home', 'HomeController@index');
 
 include 'admin.php';
+include 'dashboard.php';

@@ -7915,12 +7915,25 @@ html, body {
 
 .header .navigation, .footer .navigation {
   float: left;
-  width: 90%;
+  width: 80%;
   padding: 0 2em;
   margin-top: .75em;
 }
 
 .header .navigation a, .footer .navigation a {
+  color: #fff;
+  padding: 1em;
+}
+
+.header .auth, .footer .auth {
+  float: right;
+  width: 15%;
+  padding: 0 2em;
+  margin-top: .75em;
+  text-align: right;
+}
+
+.header .auth a, .footer .auth a {
   color: #fff;
   padding: 1em;
 }

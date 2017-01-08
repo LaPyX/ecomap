@@ -10,6 +10,33 @@
                 <a href="#">Эксперты</a>
                 <a href="#">Контакты</a>
             </div>
+
+            <div class="auth">
+                <template v-if="!activeUser">
+                    <a href="/login">Вход</a>
+                </template>
+                <template v-if="activeUser">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            {{ activeUser }} <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="/logout"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="/logout" method="POST" style="display: none;">
+
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </template>
+            </div>
         </div>
         <div class="body">
             <transition name="slide-down">
@@ -99,6 +126,7 @@
                 region: null,
                 lastCollection: 0,
                 lastActiveRegion: 0,
+                activeUser: false
             }
         },
         methods: {

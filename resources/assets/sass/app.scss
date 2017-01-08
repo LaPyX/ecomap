@@ -139,9 +139,22 @@ html, body {
 
   .navigation {
     float: left;
-    width: 90%;
+    width: 80%;
     padding: 0 2em;
     margin-top: .75em;
+
+    a {
+      color: #fff;
+      padding: 1em;
+    }
+  }
+
+  .auth {
+    float: right;
+    width: 15%;
+    padding: 0 2em;
+    margin-top: .75em;
+    text-align: right;
 
     a {
       color: #fff;
