@@ -1,9 +1,7 @@
 <template>
-    <transition name="slide-down">
-        <div class="news__item">
-            <a href="#" @click.prevent="open">{{ item.name }}</a>
-        </div>
-    </transition>
+    <div class="news__item">
+        <a href="#" @click.prevent="open">{{ item.name }}</a>
+    </div>
 </template>
 
 <script>

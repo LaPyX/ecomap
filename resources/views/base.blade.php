@@ -16,6 +16,7 @@
     @yield('content')
 
     <script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard,package.regions&lang=ru-RU" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
     <script src="https://use.fontawesome.com/1e1e181846.js"></script>
     <script>
         window.Laravel = '<?php echo json_encode([ 'csrfToken' => csrf_token() ]); ?>';
@@ -25,7 +26,6 @@
     <script src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
     <script src="/js/fancybox/jquery.fancybox.js" type="text/javascript"></script>
     <script src="/js/app.js" type="text/javascript"></script>
-    <script src="https://use.fontawesome.com/1e1e181846.js"></script>
 
     <script>
         $(document).ready(function() {
