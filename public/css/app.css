@@ -8181,4 +8181,9 @@ html, body {
   font-size: .8em;
 }
 
+.news__item {
+  display: block;
+  margin-bottom: 1em;
+}
+
 /*# sourceMappingURL=app.css.map */

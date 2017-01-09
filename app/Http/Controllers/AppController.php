@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\News;
 use App\Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,12 +18,26 @@ class AppController extends Controller
 
     public function page(Request $request)
     {
-        $page = Pages::find($request->id);
+        $page       = Pages::find($request->id);
         $page->text = nl2br($page->text);
 
         return response()->json([
             'status' => 'ok',
             'page'   => $page,
+        ]);
+    }
+
+    public function news(Request $request)
+    {
+        $news = News::where('status', 1)->get();
+        foreach ($news as $key => $value) {
+            $value['text'] = nl2br($value['text']);
+            $news[$key]    = $value;
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'news'   => $news,
         ]);
     }
 }

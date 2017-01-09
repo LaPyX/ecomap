@@ -39,7 +39,9 @@ Vue.component('request-region', require('./components/Forms/RequestRegion.vue'))
 
 Vue.component('contacts', require('./components/Contacts.vue'));
 Vue.component('experts', require('./components/Experts.vue'));
-// Vue.component('loader', require('./components/Loader.vue'));
+Vue.component('news', require('./components/News.vue'));
+Vue.component('news-item', require('./components/NewsItem.vue'));
+Vue.component('news-show', require('./components/NewsShow.vue'));
 
 Vue.component('loader', require('./components/Loader.vue'));
 Vue.component('app', require('./components/App.vue'));

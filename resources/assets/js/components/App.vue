@@ -9,6 +9,7 @@
                 <a href="#" @click.prevent="showMain">Главная</a>
                 <a href="#" @click.prevent="about">О проекте</a>
                 <a href="#" @click.prevent="experts">Эксперты</a>
+                <a href="#" @click.prevent="news">Новости</a>
                 <a href="#" @click.prevent="contacts">Контакты</a>
             </div>
 
@@ -83,6 +84,12 @@
                 <template v-if="isExpertsShown()">
                     <experts v-on:show-main="showMain"></experts>
                 </template>
+                <template v-if="isNewsShown()">
+                    <news v-on:show-main="showMain" v-on:open-news="openNews"></news>
+                </template>
+                <template v-if="isNewsItemShown()">
+                    <news-show v-on:show-main="showMain" :item="newsItem" v-on:show-news="news"></news-show>
+                </template>
             </transition>
         </div>
 
@@ -119,7 +126,8 @@
                 region: null,
                 lastCollection: 0,
                 lastActiveRegion: 0,
-                activeUser: false
+                activeUser: false,
+                newsItem: null
             }
         },
         methods: {
@@ -145,6 +153,12 @@
             },
             isExpertsShown() {
                 return 'experts' == this.page;
+            },
+            isNewsShown() {
+                return 'news' == this.page;
+            },
+            isNewsItemShown() {
+                return 'news-show' == this.page;
             },
             isMapShown() {
                 return null == this.page;
@@ -197,6 +211,10 @@
             },
             showMain() {
                 this.page = null;
+            },
+            openNews(item) {
+                this.page = 'news-show';
+                this.newsItem = item;
             }
         },
         mounted() {
@@ -242,7 +260,7 @@
                             iconImageSize: [32, 32],
                             iconImageOffset: [-16, -32]
                         });
-                        point.__id = i++;//parent.requests[request].id;
+                        point.__id = i++;
 
                         point.events.add('click', function (event) {
                             point = event.get('target');

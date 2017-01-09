@@ -23,7 +23,7 @@
         mounted() {
             var parent = this;
 
-            this.$http.get('/page/?id=2').then((response) => {
+            this.$http.get('/page?id=2').then((response) => {
                 var page = response.body.page;
 
                 parent.text = page.text;

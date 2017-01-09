@@ -402,3 +402,10 @@ html, body {
     }
   }
 }
+
+.news {
+  &__item {
+    display: block;
+    margin-bottom: 1em;
+  }
+}
