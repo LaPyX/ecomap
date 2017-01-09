@@ -32,4 +32,9 @@ class AdminController extends Controller
             'done'     => Request::where('status', 3)->count(),
         ]);
     }
+    
+    public function faq()
+    {
+        return view('admin.faq');
+    }
 }

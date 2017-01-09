@@ -37,11 +37,16 @@
                         <li><a href="{{ route('admin.personal.index') }}">Сотрудники</a></li>
                     </ul>
                 </li>
+                @if(null != Auth::user() && 1 == Auth::user()->id)
                 <li>
                     <a href="{{ route('admin.news.index') }}">Новости</a>
                 </li>
                 <li>
                     <a href="{{ route('admin.pages.index') }}">Текстовые страницы</a>
+                </li>
+                @endif
+                <li>
+                    <a href="{{ route('admin.faq') }}">Инструкции</a>
                 </li>
                 <li>
                     <a href="{{ route('logout') }}"
