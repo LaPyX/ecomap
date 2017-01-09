@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {
+    private $baseRoute = 'admin.pages.';
+    
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +19,7 @@ class PagesController extends Controller
     {
         $itemsList = Pages::orderBy('name', 'asc')->get();
 
-        return view('admin.news.index', [
+        return view($this->baseRoute . 'index', [
             'itemsList' => $itemsList
         ]);
     }
@@ -29,7 +31,7 @@ class PagesController extends Controller
      */
     public function create()
     {
-        //
+        return view($this->baseRoute . 'create');
     }
 
     /**
@@ -40,7 +42,10 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->all();
+        Pages::create($attributes);
+
+        return redirect(route($this->baseRoute . 'index'));
     }
 
     /**
@@ -62,7 +67,11 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $page = Pages::find($id);
+
+        return view($this->baseRoute . 'edit', [
+            'item' => $page
+        ]);
     }
 
     /**
@@ -74,7 +83,9 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Pages::find($id)->update($request->all());
+
+        return redirect(route($this->baseRoute . 'index'));
     }
 
     /**
@@ -85,6 +96,8 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pages::find($id)->delete();
+
+        return redirect(route($this->baseRoute . 'index'));
     }
 }

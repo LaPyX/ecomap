@@ -1,54 +1,40 @@
 @extends('admin.base')
 
 @section('content')
-    <h1>Создать сотрудника</h1>
+    <h1>Создать страницу</h1>
 
-    <form action="{{ route('admin.personal.store') }}" method="post">
+    <form action="{{ route('admin.pages.store') }}" method="post">
         {{ csrf_field() }}
 
         <div class="form-group row">
-            <label for="" class="col-sm-3">ФИО</label>
+            <label for="" class="col-sm-3">Название</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" name="name" required>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="" class="col-sm-3">Отделение</label>
+            <label for="" class="col-sm-3">Текст</label>
             <div class="col-sm-9">
-                <select name="department_id" class="form-control">
-                    @foreach($departments as $department)
-                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                    @endforeach
+                <textarea class="form-control" name="text" rows="5"></textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="" class="col-sm-3">Статус</label>
+            <div class="col-sm-9">
+                <select name="status" class="form-control">
+                    <option value="0">Черновик</option>
+                    <option value="1">Опубликовано</option>
                 </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-3">Должность</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" name="position" required>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-3">Контактные данные</label>
-            <div class="col-sm-9">
-                <textarea class="form-control" name="contacts" rows="5"></textarea>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-3">Email для автоматических уведомлений</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" name="email">
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-9 col-sm-offset-3">
-                <input type="submit" class="btn btn-primary btn-lg" value="Создать сотрудника">
-                <a href="{{ route('admin.personal.index') }}" class="btn btn-secondary btn-lg" >Отмена</a>
+                <input type="submit" class="btn btn-primary btn-lg" value="Создать страницу">
+                <a href="{{ route('admin.pages.index') }}" class="btn btn-secondary btn-lg" >Отмена</a>
             </div>
         </div>
     </form>

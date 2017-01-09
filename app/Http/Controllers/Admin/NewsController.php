@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 
 class NewsController extends Controller
 {
+    private $baseRoute = 'admin.news.';
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +19,7 @@ class NewsController extends Controller
     {
         $itemsList = News::orderBy('name', 'asc')->get();
 
-        return view('admin.news.index', [
+        return view($this->baseRoute . 'index', [
             'itemsList' => $itemsList
         ]);
     }
@@ -29,7 +31,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view($this->baseRoute . 'create');
     }
 
     /**
@@ -40,7 +42,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->all();
+        News::create($attributes);
+
+        return redirect(route($this->baseRoute . 'index'));
     }
 
     /**
@@ -62,7 +67,11 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $news = News::find($id);
+
+        return view($this->baseRoute . 'edit', [
+            'item' => $news
+        ]);
     }
 
     /**
@@ -74,7 +83,9 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        News::find($id)->update($request->all());
+
+        return redirect(route($this->baseRoute . 'index'));
     }
 
     /**
@@ -85,6 +96,8 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        News::find($id)->delete();
+
+        return redirect(route($this->baseRoute . 'index'));
     }
 }

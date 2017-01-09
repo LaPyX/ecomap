@@ -1,62 +1,48 @@
 @extends('admin.base')
 
 @section('content')
-    <h1>Редактировать сотрудника</h1>
+    <h1>Редактировать страницу</h1>
 
-    <form action="{{ route('admin.personal.update', ['personal' => $personal->id]) }}" method="post">
+    <form action="{{ route('admin.pages.update', ['pages' => $item->id]) }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="put" />
 
         <div class="form-group row">
-            <label for="" class="col-sm-3">ФИО</label>
+            <label for="" class="col-sm-3">Название</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" name="name" value="{{ old('name', $personal->name) }}" required>
+                <input type="text" class="form-control" name="name" value="{{ old('name', $item->name) }}" required>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="" class="col-sm-3">Отделение</label>
+            <label for="" class="col-sm-3">Текст</label>
             <div class="col-sm-9">
-                <select name="department_id" class="form-control">
-                    @foreach($departments as $department)
-                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                    @endforeach
+                <textarea class="form-control" name="text" rows="5">{{ old('text', $item->text) }}</textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="" class="col-sm-3">Статус</label>
+            <div class="col-sm-9">
+                <select name="status" class="form-control">
+                    <option value="0">Черновик</option>
+                    <option value="1" @if(1 == $item->status) selected="selected" @endif>Опубликовано</option>
                 </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-3">Должность</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" name="position" value="{{ old('position', $personal->position) }}" required>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-3">Контактные данные</label>
-            <div class="col-sm-9">
-                <textarea class="form-control" name="contacts" rows="5">{{ old('contacts', $personal->contacts) }}</textarea>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="" class="col-sm-3">Email для автоматических уведомлений</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" name="email" value="{{ old('email', $personal->email) }}">
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-9 col-sm-offset-3">
-                <input type="submit" class="btn btn-primary" value="Редактировать сотрудника">
-                <a href="{{ route('admin.personal.index') }}" class="btn btn-secondary" >Отмена</a>
+                <input type="submit" class="btn btn-primary btn-lg" value="Редактировать страницу">
+                <a href="{{ route('admin.news.index') }}" class="btn btn-secondary btn-lg" >Отмена</a>
             </div>
         </div>
     </form>
 
     <div class="row">
         <div class="col-sm-9 col-sm-offset-3" style="margin-top: 1em;">
-            <form action="{{ route('admin.personal.destroy', ['request' => $personal->id]) }}" method="post">
+            <form action="{{ route('admin.pages.destroy', ['pages' => $item->id]) }}" method="post">
                 {{ csrf_field() }}
                 <input type="hidden" name="_method" value="delete" />
 
