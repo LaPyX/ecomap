@@ -45,5 +45,8 @@ Vue.component('loader', require('./components/Loader.vue'));
 Vue.component('app', require('./components/App.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        user: user
+    }
 });

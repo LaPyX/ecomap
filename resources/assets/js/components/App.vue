@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <div id="map"></div>
         <div class="header">
@@ -16,25 +17,11 @@
                     <a href="/login">Вход</a>
                 </template>
                 <template v-if="activeUser">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ activeUser }} <span class="caret"></span>
-                        </a>
+                    <a href="/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ activeUser }}</a>
 
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="/logout"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-
-                                <form id="logout-form" action="/logout" method="POST" style="display: none;">
-
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
+                    <a href="/logout" @click.prevent="logout">
+                        Выйти
+                    </a>
                 </template>
             </div>
         </div>
@@ -182,6 +169,9 @@
                 }, (response) => {
                 });
             },
+            logout() {
+                this.$http.post('/logout');
+            },
             closeForm() {
                 this.state = null;
                 this.item = null;
@@ -213,6 +203,8 @@
             this.getRequests();
 
             const parent = this;
+
+            this.activeUser = user;
 
             function init(){
                 parent.ymap = new ymaps.Map ("map", {

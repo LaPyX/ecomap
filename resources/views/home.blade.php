@@ -5,5 +5,7 @@
         <app></app>
     </div>
 
-    <script>console.log(user);</script>
+    <script>
+        var user = '{{ $user->name }}';
+    </script>
 @endsection
