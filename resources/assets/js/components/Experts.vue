@@ -4,7 +4,7 @@
 
         <h1 style="text-align: center; margin: 0 0 1em;">Эксперты</h1>
 
-        <div v-if="text">
+        <div>
             {{ text }}
         </div>
     </div>
@@ -12,8 +12,10 @@
 
 <script>
     export default {
-        data: {
-            text: null
+        data: function() {
+            return {
+                text: null
+            }
         },
         methods: {
             showMain() {
