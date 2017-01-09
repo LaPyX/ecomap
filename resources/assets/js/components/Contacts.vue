@@ -4,9 +4,7 @@
 
         <h1 style="text-align: center; margin: 0 0 1em;">Контакты</h1>
 
-        <div>
-            {{ text }}
-        </div>
+        <div v-html="text"></div>
     </div>
 </template>
 

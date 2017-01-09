@@ -17,9 +17,12 @@ class AppController extends Controller
 
     public function page(Request $request)
     {
+        $page = Pages::find($request->id);
+        $page->text = nl2br($page->text);
+
         return response()->json([
             'status' => 'ok',
-            'page'   => Pages::find($request->id),
+            'page'   => $page,
         ]);
     }
 }
