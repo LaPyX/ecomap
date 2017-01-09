@@ -170,7 +170,9 @@
                 });
             },
             logout() {
-                this.$http.post('/logout');
+                this.$http.post('/logout').then((response) => {
+                    window.location.href = '/';
+                });
             },
             closeForm() {
                 this.state = null;

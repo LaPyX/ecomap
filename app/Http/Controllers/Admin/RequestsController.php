@@ -11,7 +11,7 @@ class RequestsController extends Controller
 {
     public function index()
     {
-        $request = \App\Request::where('id', '>', 0);
+        $request = \App\Request::where('created_at', '>', 0);
 
         if (Auth::user()->department_id) {
             $department = Department::find((int)Auth::user()->department_id);
