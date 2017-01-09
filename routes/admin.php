@@ -7,4 +7,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::resource('departments', 'Admin\DepartmentController');
     Route::resource('requests', 'Admin\RequestsController');
     Route::resource('personal', 'Admin\PersonalController');
+    Route::resource('news', 'Admin\NewsController');
+    Route::resource('pages', 'Admin\PagesController');
 });

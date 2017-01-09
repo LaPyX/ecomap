@@ -38,6 +38,12 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="{{ route('admin.news.index') }}">Новости</a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.pages.index') }}">Текстовые страницы</a>
+                </li>
+                <li>
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">Выйти из системы</a>
