@@ -7,8 +7,8 @@
             <div class="navigation">
                 <a href="#" @click.prevent="showMain">Главная</a>
                 <a href="#" @click.prevent="about">О проекте</a>
-                <a href="#">Эксперты</a>
-                <a href="#">Контакты</a>
+                <a href="#" @click.prevent="experts">Эксперты</a>
+                <a href="#" @click.prevent="contacts">Контакты</a>
             </div>
 
             <div class="auth">
@@ -71,7 +71,7 @@
             </transition>
 
             <transition name="slide-down">
-                <template v-if="!isMapShown()">
+                <template v-if="isAboutShown()">
                     <div class="page">
                         <a href="#" class="close" @click.prevent="showMain" ></a>
 
@@ -89,6 +89,12 @@
                             </tr>
                         </table>
                     </div>
+                </template>
+                <template v-if="isContactsShown()">
+                    <contacts></contacts>
+                </template>
+                <template v-if="isExpertsShown()">
+                    <experts></experts>
                 </template>
             </transition>
         </div>
@@ -144,6 +150,15 @@
             isRegionShown() {
                 return 'region' == this.state;
             },
+            isAboutShown() {
+                return 'about' == this.state;
+            },
+            isContactsShown() {
+                return 'contacts' == this.state;
+            },
+            isExpertsShown() {
+                return 'experts' == this.state;
+            },
             isMapShown() {
                 return null == this.page;
             },
@@ -177,7 +192,16 @@
                 this.placemark = null;
             },
             about() {
-                this.page = true;
+                this.page = 'about';
+            },
+            contacts() {
+                this.page = 'contacts';
+            },
+            experts() {
+                this.page = 'experts';
+            },
+            news() {
+                this.page = 'news';
             },
             showMain() {
                 this.page = null;

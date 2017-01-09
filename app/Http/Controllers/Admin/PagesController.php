@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Pages;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,11 @@ class PagesController extends Controller
      */
     public function index()
     {
-        //
+        $itemsList = Pages::orderBy('name', 'asc')->get();
+
+        return view('admin.news.index', [
+            'itemsList' => $itemsList
+        ]);
     }
 
     /**

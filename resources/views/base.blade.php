@@ -32,5 +32,7 @@
             $('.fancybox').fancybox();
         });
     </script>
+
+    @include('footer')
 </body>
 </html>

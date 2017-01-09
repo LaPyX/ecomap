@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use MongoDB\BSON\Javascript;
 
 class HomeController extends Controller
 {
