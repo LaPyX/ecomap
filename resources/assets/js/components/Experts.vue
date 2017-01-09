@@ -5,3 +5,13 @@
         <h1 style="text-align: center; margin: 0 0 1em;">Эксперты</h1>
     </div>
 </template>
+
+<script>
+    export default {
+        methods: {
+            showMain() {
+                this.$emit('show-main');
+            }
+        }
+    }
+</script>

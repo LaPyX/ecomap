@@ -78,10 +78,10 @@
                     </div>
                 </template>
                 <template v-if="isContactsShown()">
-                    <contacts></contacts>
+                    <contacts v-on:show-main="showMain"></contacts>
                 </template>
                 <template v-if="isExpertsShown()">
-                    <experts></experts>
+                    <experts v-on:show-main="showMain"></experts>
                 </template>
             </transition>
         </div>
@@ -138,13 +138,13 @@
                 return 'region' == this.state;
             },
             isAboutShown() {
-                return 'about' == this.state;
+                return 'about' == this.page;
             },
             isContactsShown() {
-                return 'contacts' == this.state;
+                return 'contacts' == this.page;
             },
             isExpertsShown() {
-                return 'experts' == this.state;
+                return 'experts' == this.page;
             },
             isMapShown() {
                 return null == this.page;

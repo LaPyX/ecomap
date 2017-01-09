@@ -6,6 +6,6 @@
     </div>
 
     <script>
-        var user = '{{ $user->name }}';
+        var user = '{{ $user ? $user->name : false }}';
     </script>
 @endsection
