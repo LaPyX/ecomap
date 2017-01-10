@@ -8,22 +8,8 @@
             <div class="navigation">
                 <a href="#" @click.prevent="showMain">Главная</a>
                 <a href="#" @click.prevent="about">О проекте</a>
-                <a href="#" @click.prevent="experts">Эксперты</a>
                 <a href="#" @click.prevent="news">Новости</a>
                 <a href="#" @click.prevent="contacts">Контакты</a>
-            </div>
-
-            <div class="auth">
-                <template v-if="!activeUser">
-                    <a href="/login">Вход</a>
-                </template>
-                <template v-if="activeUser">
-                    <a href="/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ activeUser }}</a>
-
-                    <a href="/logout" @click.prevent="logout">
-                        Выйти
-                    </a>
-                </template>
             </div>
         </div>
         <div class="body">
