@@ -87,7 +87,7 @@ class ResourceController extends Controller
             $requestObject->id       = $id;
             $requestObject->password = $password;
 
-            EventNotification::send($requestObject);
+            EventNotification::send(EventNotification::EVENT_NEW_REQUEST, $requestObject);
 
             return response()->json([
                 'status' => 'ok',

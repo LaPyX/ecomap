@@ -69,7 +69,7 @@ class RequestsController extends Controller
         $requestObject->comment = $request->comment;
         $requestObject->save();
 
-        EventNotification::send($requestObject);
+        EventNotification::send(EventNotification::EVENT_EDIT_REQUEST, $requestObject);
 
         return redirect(route('admin.requests.index'));
     }
