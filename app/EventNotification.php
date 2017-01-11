@@ -69,8 +69,8 @@ class EventNotification extends Model
     private static function eventEditRequest($request)
     {
         self::sendRequestEmail([
-            'email' => $request['request']->email,
-            'name'  => $request['request']->name,
+            'email' => $request->email,
+            'name'  => $request->name,
         ], 'Изменён статус обращения', 'emails.requests.update', $request);
     }
 
