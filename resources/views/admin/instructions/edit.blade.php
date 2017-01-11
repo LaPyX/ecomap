@@ -21,17 +21,6 @@
             </div>
         </div>
 
-
-        <div class="form-group row">
-            <label for="" class="col-sm-3">Статус</label>
-            <div class="col-sm-9">
-                <select name="status" class="form-control">
-                    <option value="0">Черновик</option>
-                    <option value="1" @if(1 == $item->status) selected="selected" @endif>Опубликовано</option>
-                </select>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-sm-9 col-sm-offset-3">
                 <input type="submit" class="btn btn-primary btn-lg" value="Редактировать видео">

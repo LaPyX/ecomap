@@ -17,7 +17,7 @@
 
     <div>
     @forelse($itemsList as $item)
-        <a href="{{ route($baseRoute . $view, ['instruction' => $item->id]) }}">{{ $item->name }}</a>
+        <p><a href="{{ route($baseRoute . $view, ['instruction' => $item->id]) }}">{{ $item->name }}</a></p>
     @empty
         <i>Нет добавленных инструкций</i>
     @endforelse
