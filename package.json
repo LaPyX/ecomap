@@ -16,6 +16,8 @@
     "vue-resource": "^1.0.3"
   },
   "dependencies": {
-    "vue-fancybox": "^1.0.2"
+    "momentum": "^1.0.1",
+    "vue-fancybox": "^1.0.2",
+    "vue-moment": "^2.0.2"
   }
 }

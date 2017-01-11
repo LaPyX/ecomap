@@ -7,10 +7,25 @@ use Illuminate\Support\Facades\Mail;
 
 class EventNotification extends Model
 {
-    public static function send(Request $requestObject)
+    const EVENT_NEW_REQUEST  = 0;
+    const EVENT_EDIT_REQUEST = 1;
+
+    public static function send($eventType, $params)
     {
-        $personal = Personal::whereHas('department', function ($query) use ($requestObject) {
-            $query->where('region_name', $requestObject->region_name);
+        switch ($eventType) {
+            case EventNotification::EVENT_NEW_REQUEST:
+                self::eventNewRequest($params);
+                break;
+            case EventNotification::EVENT_EDIT_REQUEST:
+                self::eventEditRequest($params->request);
+                break;
+        }
+    }
+
+    private function eventRequest($params)
+    {
+        $personal = Personal::whereHas('department', function ($query) use ($params) {
+            $query->where('region_name', $params['request']->region_name);
         })->get();
 
         foreach ($personal as $person) {
@@ -18,21 +33,53 @@ class EventNotification extends Model
                 continue;
             }
 
-            Mail::send('emails.requests.new-admin', ['request' => $requestObject, 'user' => $person], function ($m) use ($requestObject, $person) {
-                $m->from('noreply@ecomap.addedvalue.online', 'Интерактивная карта незаконных свалок');
-
-                $m->to($person->email, $person->name)->subject('Новое обращение');
-            });
+            $this->sendRequestEmail([
+                'email' => $person->email,
+                'name'  => $person->name,
+            ], 'Новое обращение', $params['template']['admin'], $params['request']);
         }
 
-        if ('' == $requestObject->email) {
+        if ('' == $params['request']->email) {
             return;
         }
-        
-        Mail::send('emails.requests.new-user', ['request' => $requestObject], function ($m) use ($requestObject) {
+
+        $this->sendRequestEmail([
+            'email' => $params['request']->email,
+            'name'  => $params['request']->name,
+        ], 'Ваше обращение принято', $params['template']['user'], $params['request']);
+    }
+
+    private function eventNewRequest($params)
+    {
+        $params = [
+            'request'  => $params,
+            'template' => [
+                'admin' => 'emails.requests.new-admin',
+                'user'  => 'emails.requests.new-user',
+            ],
+            'subject' => [
+                'admin' => 'Новое обращение',
+                'user'  => 'Ваше обращение принято',
+            ],
+        ];
+
+        $this->eventRequest($params);
+    }
+
+    private function eventEditRequest($request)
+    {
+        $this->sendRequestEmail([
+            'email' => $request['request']->email,
+            'name'  => $request['request']->name,
+        ], 'Изменён статус обращения', 'emails.requests.update', $request);
+    }
+
+    private function sendRequestEmail($to, $subject, $template, $request)
+    {
+        Mail::send($template, ['request' => $request], function ($m) use ($to, $subject, $request) {
             $m->from('noreply@ecomap.addedvalue.online', 'Интерактивная карта незаконных свалок');
 
-            $m->to($requestObject->email, $requestObject->name)->subject('Ваше обращение принято');
+            $m->to($to['email'], $to['name'])->subject($subject);
         });
     }
 }

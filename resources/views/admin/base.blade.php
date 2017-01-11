@@ -42,11 +42,11 @@
                     <a href="{{ route('admin.news.index') }}">Новости</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.pages.index') }}">Текстовые страницы</a>
+                    <a href="{{ route('admin.pages.index') }}">Страницы</a>
                 </li>
                 @endif
                 <li>
-                    <a href="{{ route('admin.faq') }}">Инструкции</a>
+                    <a href="{{ route('admin.instructions.index') }}">Инструкции</a>
                 </li>
                 <li>
                     <a href="{{ route('logout') }}"

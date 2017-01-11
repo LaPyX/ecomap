@@ -10,4 +10,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::resource('personal', 'Admin\PersonalController');
     Route::resource('news', 'Admin\NewsController');
     Route::resource('pages', 'Admin\PagesController');
+    Route::resource('instructions', 'Admin\InstructionsController');
 });

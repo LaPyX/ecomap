@@ -1,19 +1,14 @@
 @extends('admin.base')
 
 @section('content')
-    <h1>Текстовые страницы</h1>
-
-    <a class="btn btn-primary" href="{{ route('admin.pages.create') }}">Создать страницу</a>
-
-    <form class="pull-right">
-        <input class="form-control" type="text" placeholder="Поиск" name="search">
-    </form>
+    <h1>Cтраницы</h1>
 
     <table class="table" style="margin-top: .75em;">
         <thead>
-        <td>Название</td>
-        <td>Дата создания</td>
-        <td>Статус</td>
+            <tr>
+                <td>Название</td>
+                <td width="320">Дата последнего редактирования</td>
+            </tr>
         </thead>
         @forelse($itemsList as $item)
             <tr>
@@ -22,9 +17,6 @@
                 </td>
                 <td>
                     {{ $item->created_at }}
-                </td>
-                <td>
-                    {{ $item->status ? 'Опубликовано' : 'Черновик' }}
                 </td>
             </tr>
         @empty

@@ -26,8 +26,7 @@ class Request extends Model
 
     public static function generateId()
     {
-        $out = strtoupper(str_random(5));
-        $out .= '-' . date('YmdHis') . '-' . random_int(1000, 9999);
+        $out = date('ymd') . '-' . random_int(100, 999);
 
         return $out;
     }

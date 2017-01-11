@@ -33,25 +33,4 @@ class AdminController extends Controller
             'done'     => \App\Request::where('status', 3)->count(),
         ]);
     }
-
-    public function faq(Request $request)
-    {
-        $faq = SystemPage::find(1);
-        if (null == $faq) {
-            $faq = SystemPage::create([
-                'name' => 'FAQ',
-                'text' => ''
-            ]);
-        }
-
-        if ($request->input('faq')) {
-            $faq->text = $request->faq;
-            $faq->save();
-        }
-
-        return view('admin.faq', [
-            'faq'  => $faq->text,
-            'mode' => (boolean)Auth::user()->department_id 
-        ]);
-    }
 }

@@ -23,7 +23,6 @@ class DepartmentController extends Controller
             $departments = Department::orderBy('region_name', 'asc')->get();
         }
 
-
         return view('admin.departments.index', [
             'departments' => $departments,
             'search' => '' != $request->search ? $request->search : false,

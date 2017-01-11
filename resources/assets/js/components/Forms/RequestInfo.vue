@@ -15,7 +15,7 @@
         <p v-if="$parent.requests[item].comment" style="margin: 1em 0 2.5em;">
             <i>{{ $parent.requests[item].comment }}</i><br>
 
-            <span class="info__note info__note--time"><i class="fa fa-clock-o"></i> {{ $parent.requests[item].updated_at }}</span>
+            <span class="info__note info__note--time"><i class="fa fa-clock-o"></i> {{ $parent.requests[item].updated_at|moment('DD.MM.YYYY') }}</span>
         </p>
 
         <div class="info">

@@ -8,6 +8,12 @@
 require('./bootstrap');
 import fancyBox from 'vue-fancybox';
 
+const moment = require('moment');
+
+Vue.use(require('vue-moment'), {
+    moment: moment
+});
+
 Vue.http.interceptors.push(function(request, next) {
     var input = JSON.parse(Laravel);
     request.headers.set('X-CSRF-TOKEN', input.csrfToken);

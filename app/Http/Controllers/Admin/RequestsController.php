@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Department;
+use App\EventNotification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -67,6 +68,8 @@ class RequestsController extends Controller
         $requestObject->status = $request->status;
         $requestObject->comment = $request->comment;
         $requestObject->save();
+
+        EventNotification::send($requestObject);
 
         return redirect(route('admin.requests.index'));
     }
