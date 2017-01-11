@@ -22,7 +22,7 @@ class EventNotification extends Model
         }
     }
 
-    private function eventRequest($params)
+    private static function eventRequest($params)
     {
         $personal = Personal::whereHas('department', function ($query) use ($params) {
             $query->where('region_name', $params['request']->region_name);
@@ -33,7 +33,7 @@ class EventNotification extends Model
                 continue;
             }
 
-            $this->sendRequestEmail([
+            self::sendRequestEmail([
                 'email' => $person->email,
                 'name'  => $person->name,
             ], 'Новое обращение', $params['template']['admin'], $params['request']);
@@ -43,13 +43,13 @@ class EventNotification extends Model
             return;
         }
 
-        $this->sendRequestEmail([
+        self::sendRequestEmail([
             'email' => $params['request']->email,
             'name'  => $params['request']->name,
         ], 'Ваше обращение принято', $params['template']['user'], $params['request']);
     }
 
-    private function eventNewRequest($params)
+    private static function eventNewRequest($params)
     {
         $params = [
             'request'  => $params,
@@ -63,18 +63,18 @@ class EventNotification extends Model
             ],
         ];
 
-        $this->eventRequest($params);
+        self::eventRequest($params);
     }
 
-    private function eventEditRequest($request)
+    private static function eventEditRequest($request)
     {
-        $this->sendRequestEmail([
+        self::sendRequestEmail([
             'email' => $request['request']->email,
             'name'  => $request['request']->name,
         ], 'Изменён статус обращения', 'emails.requests.update', $request);
     }
 
-    private function sendRequestEmail($to, $subject, $template, $request)
+    private static function sendRequestEmail($to, $subject, $template, $request)
     {
         Mail::send($template, ['request' => $request], function ($m) use ($to, $subject, $request) {
             $m->from('noreply@ecomap.addedvalue.online', 'Интерактивная карта незаконных свалок');
