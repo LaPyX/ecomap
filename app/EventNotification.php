@@ -17,7 +17,7 @@ class EventNotification extends Model
                 self::eventNewRequest($params);
                 break;
             case EventNotification::EVENT_EDIT_REQUEST:
-                self::eventEditRequest($params->request);
+                self::eventEditRequest($params);
                 break;
         }
     }
