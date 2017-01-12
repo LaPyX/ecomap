@@ -46,23 +46,7 @@
 
             <transition name="slide-down">
                 <template v-if="isAboutShown()">
-                    <div class="page">
-                        <a href="#" class="close" @click.prevent="showMain" ></a>
-
-                        <h1 style="text-align: center; margin: 0 0 1em;">О проекте</h1>
-                        <p>
-                            Президент России, лидер Общероссийского народного фронта Владимир Путин по итогам «Форума действий» ОНФ, выступил за создание общественной Интернет-карты, на который любой пользователь мог бы оставить сообщение и обозначить на ней незаконную свалку. В исполнении поручения Президента, Центр общественного мониторинга ОНФ по проблемам экологии и защиты леса в Год экологии (2017) запустил «Интерактивную карту незаконных свалок».
-                        </p>
-
-                        <h2 style="text-align: center; margin: 1em 0;">Партнёры:</h2>
-
-                        <table style="width: 60%; margin: 0 auto;">
-                            <tr>
-                                <td style="text-align: center;"><img src="/images/ccrf.png" width=300></td>
-                                <td style="text-align: center;"><img src="/images/russia-today.png"></td>
-                            </tr>
-                        </table>
-                    </div>
+                    <about v-on:show-main="showMain"></about>
                 </template>
                 <template v-if="isContactsShown()">
                     <contacts v-on:show-main="showMain"></contacts>

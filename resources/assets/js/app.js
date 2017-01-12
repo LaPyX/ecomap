@@ -43,6 +43,7 @@ Vue.component('request-form', require('./components/Forms/RequestForm.vue'));
 Vue.component('request-info', require('./components/Forms/RequestInfo.vue'));
 Vue.component('request-region', require('./components/Forms/RequestRegion.vue'));
 
+Vue.component('about', require('./components/About.vue'));
 Vue.component('contacts', require('./components/Contacts.vue'));
 Vue.component('experts', require('./components/Experts.vue'));
 Vue.component('news', require('./components/News.vue'));
