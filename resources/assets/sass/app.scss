@@ -127,6 +127,7 @@ html, body {
   background: $brand-primary;
   color: #fff;
   padding: 1em 0;
+  font-size: .8em;
 
   .btn {
     padding: .75em 1.5em;
@@ -135,11 +136,12 @@ html, body {
   img {
     float: left;
     padding: 0 0 0 2em;
+    width: 75px;
   }
 
   .navigation {
     float: left;
-    width: 80%;
+    width: 70%;
     padding: 0 2em;
     margin-top: .75em;
 
@@ -159,6 +161,21 @@ html, body {
     a {
       color: #fff;
       padding: 1em;
+    }
+  }
+
+  .select-region {
+    display: block;
+    float: right;
+    width: 300px;
+    margin-right: 1em;
+
+    .form-control {
+      display: inline-block;
+      padding: 0;
+      width: 150px;
+      font-size: .9em;
+      margin-left: .5em;
     }
   }
 }
@@ -192,9 +209,10 @@ html, body {
   left: 0;
   color: #999;
   padding-right: 2em;
+  font-size: .8em;
 
   img {
-    width: 100px;
+    width: 75px;
   }
 
   .credentials {
@@ -210,6 +228,14 @@ html, body {
     img {
       float: none;
       width: auto;
+      margin-left: .2em;
+      padding: 0;
+      opacity: .7;
+      transition: opacity .25s;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }

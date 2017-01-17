@@ -15,7 +15,7 @@
 <body>
     @yield('content')
 
-    <script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard,package.regions&lang=ru-RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
     <script src="https://use.fontawesome.com/1e1e181846.js"></script>
     <script>

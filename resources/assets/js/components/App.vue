@@ -11,6 +11,15 @@
                 <a href="#" @click.prevent="news">Новости</a>
                 <a href="#" @click.prevent="contacts">Контакты</a>
             </div>
+
+            <div class="select-region">
+                Выберите регион:
+                <select class="form-control" name="region_name" @change="selectRegionFromList">
+                    <option v-for="(region, index) in regions"
+                            :data-id="region.id"
+                            :value="index">{{ region.name }}</option>
+                </select>
+            </div>
         </div>
         <div class="body">
             <transition name="slide-down">
@@ -68,13 +77,19 @@
                 <img src="/images/logo_onf.png" title="Общероссийский народный фронт">
 
                 <p class="credentials">
-                    <strong>Интерактивная карта незаконных свалок</strong><br>
+                    <strong>Интерактивная карта свалок</strong><br>
                     Проект Общероссийского Народного Фронта
                 </p>
             </div>
 
             <div class="socials pull-right">
-                Мы в соц. сетях: <img src="/images/socials.png" >
+                Мы в соц. сетях:
+
+                <a href="https://vk.com/ecoonf" target="_blank"><img src="/images/vk.png" ></a>
+                <a href="https://www.facebook.com/ecoonf/" target="_blank"><img src="/images/facebook.png" ></a>
+                <a href="https://twitter.com/ecoonf" target="_blank"><img src="/images/twitter.png" ></a>
+                <a href="https://ok.ru/ecoonf" target="_blank"><img src="/images/ok.png" ></a>
+                <a href="https://www.youtube.com/channel/UCsjCX2e5ywz-arCPN6_C-tQ" target="_blank"><img src="/images/youtube.png" ></a>
             </div>
         </div>
     </div>
@@ -97,7 +112,8 @@
                 lastCollection: 0,
                 lastActiveRegion: 0,
                 activeUser: false,
-                newsItem: null
+                newsItem: null,
+                regions: []
             }
         },
         methods: {
@@ -185,6 +201,27 @@
             openNews(item) {
                 this.page = 'news-show';
                 this.newsItem = item;
+            },
+            selectRegionFromList(e) {
+                if (this.lastActiveRegion) {
+                    this.lastActiveRegion.options.set('preset', {
+                        fillColor: '#E6EE9C',
+                        opacity: 0.5
+                    });
+                }
+
+                var region = this.regions[e.target.value].obj;
+                region.options.set('preset', {
+                    fillColor: 'rgba(0,0,0,0)',
+                    strokeColor: '4CAF50',
+                    strokeWidth: 3
+                });
+
+                this.lastActiveRegion = region;
+                this.ymap.setBounds(region.geometry.getBounds());
+
+                this.state  = 'region';
+                this.region = this.regions[e.target.value].name;
             }
         },
         mounted() {
@@ -195,6 +232,10 @@
             const parent = this;
 
             this.activeUser = user;
+
+            function sortRegions(a, b) {
+                return a.name.localeCompare(b.name);
+            }
 
             function init(){
                 parent.ymap = new ymaps.Map ("map", {
@@ -247,15 +288,18 @@
                     lang: 'ru',
                     quality: 1
                 }).then(function (result) {
-                    var regions = result.geoObjects; // ссылка на коллекцию GeoObjectCollection
+                    var regions = result.geoObjects;
 
                     regions.each(function (reg) {
+                        parent.regions.push({ id: reg.properties.get('osmId'), name: reg.properties.get('name'), obj: reg });
+
                         reg.options.set('preset', {
                             fillColor: '#E6EE9C',
                             opacity: 0.5
                         });
                     });
 
+                    parent.regions.sort(sortRegions);
 
                     regions.events.add('click', function (event) {
                         var target = event.get('target');

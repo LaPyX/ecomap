@@ -11,7 +11,8 @@
         <table style="width: 60%; margin: 0 auto;">
             <tr>
                 <td style="text-align: center;"><img src="/images/ccrf.png" width=300></td>
-                <td style="text-align: center;"><img src="/images/russia-today.png"></td>
+                <td style="text-align: center;"><img src="/images/russia-today.png" style="margin-left: 2em;"></td>
+                <td style="text-align: center;"><img src="/images/minprid.jpg" width=300 style="margin-left: 2em;"></td>
             </tr>
         </table>
     </div>

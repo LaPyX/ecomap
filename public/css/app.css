@@ -7902,6 +7902,7 @@ html, body {
   background: #449d44;
   color: #fff;
   padding: 1em 0;
+  font-size: .8em;
 }
 
 .header .btn, .footer .btn {
@@ -7911,11 +7912,12 @@ html, body {
 .header img, .footer img {
   float: left;
   padding: 0 0 0 2em;
+  width: 75px;
 }
 
 .header .navigation, .footer .navigation {
   float: left;
-  width: 80%;
+  width: 70%;
   padding: 0 2em;
   margin-top: .75em;
 }
@@ -7936,6 +7938,21 @@ html, body {
 .header .auth a, .footer .auth a {
   color: #fff;
   padding: 1em;
+}
+
+.header .select-region, .footer .select-region {
+  display: block;
+  float: right;
+  width: 300px;
+  margin-right: 1em;
+}
+
+.header .select-region .form-control, .footer .select-region .form-control {
+  display: inline-block;
+  padding: 0;
+  width: 150px;
+  font-size: .9em;
+  margin-left: .5em;
 }
 
 .body {
@@ -7966,10 +7983,11 @@ html, body {
   left: 0;
   color: #999;
   padding-right: 2em;
+  font-size: .8em;
 }
 
 .footer img {
-  width: 100px;
+  width: 75px;
 }
 
 .footer .credentials {
@@ -7986,6 +8004,15 @@ html, body {
 .footer .socials img {
   float: none;
   width: auto;
+  margin-left: .2em;
+  padding: 0;
+  opacity: .7;
+  -webkit-transition: opacity .25s;
+  transition: opacity .25s;
+}
+
+.footer .socials img:hover {
+  opacity: 1;
 }
 
 .slide-fade-enter-active {
