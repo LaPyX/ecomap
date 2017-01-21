@@ -13,7 +13,7 @@ class ParseNews extends Command
      *
      * @var string
      */
-    protected $signature = 'news:parse';
+    protected $signature = 'news:parse {page? : Number of the page on the main website}';
 
     /**
      * The console command description.
@@ -40,12 +40,16 @@ class ParseNews extends Command
     public function handle()
     {
         $path = 'http://eco.onf.ru/news';
-        $page = '?page=';
+        if ('' != $this->argument('page')) {
+            $path .= '?page=' . $this->argument('page');
+        }
 
         $document   = new Document($path, $isFile = true);
         $entryBlock = '.item-list .views-row';
 
         $items = $document->find($entryBlock);
+        $items = array_reverse($items);
+
         foreach ($items as $item) {
             $entryMeta = $item->find('.views-field-title a')[0];
             $entryName = $entryMeta->text();
@@ -70,7 +74,7 @@ class ParseNews extends Command
             $photos = $entryBody->find('.field-name-field-photos .field-item a');
             foreach ($photos as $photo) {
                 $url   = $photo->attr('href');
-                $text .= '<img src="' . $url . '">';
+                $text .= '<p class="news__image"><img src="' . $url . '"></p>';
             }
 
             $news = new News();

@@ -29,7 +29,7 @@ class AppController extends Controller
 
     public function news(Request $request)
     {
-        $news = News::where('status', 1)->get();
+        $news = News::where('status', 1)->orderBy('created_at', 'desc')->get();
         foreach ($news as $key => $value) {
             $value['text'] = nl2br($value['text']);
             $news[$key]    = $value;
