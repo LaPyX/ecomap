@@ -36,8 +36,10 @@ class AppController extends Controller
         }
 
         return response()->json([
-            'status' => 'ok',
-            'news'   => $news,
+            'status'    => 'ok',
+            'news'      => $news->data,
+            'next_page' => $news->next_page_url,
+            'prev_page' => $news->prev_page_url
         ]);
     }
 }

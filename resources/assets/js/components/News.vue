@@ -12,6 +12,9 @@
                               v-on:beforeEnter="beforeEnter">
                 <news-item v-for="(item, index) in news" :item="item" v-on:open="open" key="item.id" :data-index="item.id"></news-item>
             </transition-group>
+
+            <a href="#" @click.prevent="prevPage" v-if="prev_page">Предыдущая страница</a>
+            <a href="#" @click.prevent="nextPage" v-if="next_page">Следующая страница</a>
         </div>
     </div>
 </template>
@@ -20,7 +23,9 @@
     export default {
         data: function() {
             return {
-                news: []
+                news: [],
+                next_page: null,
+                prev_page: null
             }
         },
         methods: {
@@ -53,11 +58,27 @@
                         { complete: done }
                   )
                 }, delay)
+            },
+            nextPage: function() {
+                this.$http.get(this.next_page).then((response) => {
+                    this.news      = response.body.news;
+                    this.next_page = response.body.next_page;
+                    this.prev_page = response.body.prev_page;
+                });
+            },
+            prevPage: function() {
+                this.$http.get(this.prev_page).then((response) => {
+                    this.news      = response.body.news;
+                    this.next_page = response.body.next_page;
+                    this.prev_page = response.body.prev_page;
+                });
             }
         },
         mounted() {
             this.$http.get('/news').then((response) => {
-                this.news = response.body.news;
+                this.news      = response.body.news;
+                this.next_page = response.body.next_page;
+                this.prev_page = response.body.prev_page;
             });
         }
     }
