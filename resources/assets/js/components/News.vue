@@ -61,24 +61,24 @@
             },
             nextPage: function() {
                 this.$http.get(this.next_page).then((response) => {
-                    this.news      = response.body.news;
-                    this.next_page = response.body.next_page;
-                    this.prev_page = response.body.prev_page;
+                    this.news      = response.body.news.data;
+                    this.next_page = response.body.news.next_page_url;
+                    this.prev_page = response.body.news.prev_page_url;
                 });
             },
             prevPage: function() {
                 this.$http.get(this.prev_page).then((response) => {
-                    this.news      = response.body.news;
-                    this.next_page = response.body.next_page;
-                    this.prev_page = response.body.prev_page;
+                    this.news      = response.body.news.data;
+                    this.next_page = response.body.news.next_page_url;
+                    this.prev_page = response.body.news.prev_page_url;
                 });
             }
         },
         mounted() {
             this.$http.get('/news').then((response) => {
-                this.news      = response.body.news;
-                this.next_page = response.body.next_page;
-                this.prev_page = response.body.prev_page;
+                this.news      = response.body.news.data;
+                this.next_page = response.body.news.next_page_url;
+                this.prev_page = response.body.news.prev_page_url;
             });
         }
     }

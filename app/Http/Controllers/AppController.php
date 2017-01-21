@@ -30,7 +30,6 @@ class AppController extends Controller
     public function news(Request $request)
     {
         $news = News::where('status', 1)->orderBy('created_at', 'desc')->paginate(15);
-        dd($news);
 
         foreach ($news as $key => $value) {
             $value['text'] = nl2br($value['text']);
@@ -39,9 +38,7 @@ class AppController extends Controller
 
         return response()->json([
             'status'    => 'ok',
-            'news'      => $news,
-//            'next_page' => $news->next_page_url,
-//            'prev_page' => $news->prev_page_url
+            'news'      => $news
         ]);
     }
 }
