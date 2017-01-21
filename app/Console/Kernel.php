@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\ParseNews::class,
-        Commands\RemoveNews::class
+        Commands\RemoveNews::class,
+        Commands\InitNews::class
     ];
 
     /**
