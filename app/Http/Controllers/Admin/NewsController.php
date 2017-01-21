@@ -17,7 +17,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $itemsList = News::orderBy('created_at', 'desc')->pagination(15);
+        $itemsList = News::orderBy('created_at', 'desc')->paginate(15);
 
         return view($this->baseRoute . 'index', [
             'itemsList' => $itemsList
