@@ -56,17 +56,6 @@ class ResourceController extends Controller
             $attributes['status']    = 0;
             $attributes['id']        = $id;
 
-            // Create new user if not authorized
-            $password = str_random();
-
-            $user = User::create([
-                'name'     => $attributes['name'],
-                'email'    => $attributes['email'],
-                'password' => bcrypt($password),
-            ]);
-
-            $attributes['user_id'] = $user->id;
-
             $requestObject = \App\Request::create($attributes);
 
             if ($request->file('photo')) {
@@ -85,7 +74,6 @@ class ResourceController extends Controller
             }
 
             $requestObject->id       = $id;
-            $requestObject->password = $password;
 
             EventNotification::send(EventNotification::EVENT_NEW_REQUEST, $requestObject);
 
