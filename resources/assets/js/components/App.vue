@@ -208,6 +208,20 @@
                         fillColor: '#E6EE9C',
                         opacity: 0.5
                     });
+
+                    if ('Адыгея' == this.region) {
+                        this.regions[28].obj.options.set('preset', {
+                            fillColor: '#E6EE9C',
+                            opacity: 0.5
+                        });
+                    }
+
+                    if ('Севастополь' == this.region) {
+                        this.regions[54].obj.options.set('preset', {
+                            fillColor: '#E6EE9C',
+                            opacity: 0.5
+                        });
+                    }
                 }
 
                 var region = this.regions[e.target.value].obj;
@@ -216,6 +230,18 @@
                     strokeColor: '4CAF50',
                     strokeWidth: 3
                 });
+
+                if ('Адыгея' == this.regions[e.target.value].name) {
+                    this.regions[28].obj.options.set('preset', {
+                        fillColor: 'rgba(0,0,0,0)'
+                    });
+                }
+
+                if ('Севастополь' == this.regions[e.target.value].name) {
+                    this.regions[54].obj.options.set('preset', {
+                        fillColor: 'rgba(0,0,0,0)'
+                    });
+                }
 
                 this.lastActiveRegion = region;
                 this.ymap.setBounds(region.geometry.getBounds());
@@ -328,13 +354,41 @@
                                 fillColor: '#E6EE9C',
                                 opacity: 0.5
                             });
+
+                            console.log(parent.region);
+                            if ('Адыгея' == parent.region) {
+                                parent.regions[28].obj.options.set('preset', {
+                                    fillColor: '#E6EE9C',
+                                    opacity: 0.5
+                                });
+                            }
+
+                            if ('Севастополь' == parent.region) {
+                                parent.regions[54].obj.options.set('preset', {
+                                    fillColor: '#E6EE9C',
+                                    opacity: 0.5
+                                });
+                            }
                         }
+
                         parent.lastActiveRegion = target;
                         parent.lastActiveRegion.options.set('preset', {
                             fillColor: 'rgba(0,0,0,0)',
                             strokeColor: '4CAF50',
                             strokeWidth: 3
                         });
+
+                        if ('Адыгея' == target.properties.get('name')) {
+                            parent.regions[28].obj.options.set('preset', {
+                                fillColor: 'rgba(0,0,0,0)'
+                            });
+                        }
+
+                        if ('Севастополь' == target.properties.get('name')) {
+                            parent.regions[54].obj.options.set('preset', {
+                                fillColor: 'rgba(0,0,0,0)'
+                            });
+                        }
 
                         var coord = event.get('coordPosition');
                         parent.ymap.setCenter(coord);

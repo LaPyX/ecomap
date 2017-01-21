@@ -35,4 +35,6 @@
             </tr>
         @endforelse
     </table>
+
+    {{ $itemsList->links() }}
 @endsection
