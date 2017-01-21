@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\News;
 use Illuminate\Console\Command;
 
-class ParseNews extends Command
+class RemoveNews extends Command
 {
     /**
      * The name and signature of the console command.
