@@ -39,7 +39,7 @@ class InitNews extends Command
      */
     public function handle()
     {
-        for ($i = $this->argument('page'); $i > 0; $i++) {
+        for ($i = $this->argument('page'); $i > 0; $i--) {
             Artisan::call('news:parse', [
                 'page' => $i
             ]);
