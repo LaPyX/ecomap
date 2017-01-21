@@ -43,7 +43,7 @@ class ParseNews extends Command
         $page = '?page=';
 
         $document   = new Document($path, $isFile = true);
-        $entryBlock = '.views-row';
+        $entryBlock = '.item-list .views-row';
 
         $items = $document->find($entryBlock);
         foreach ($items as $item) {
